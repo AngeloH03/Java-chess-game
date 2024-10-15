@@ -30,7 +30,7 @@ public class Spot {
      * Returns the current piece of the spot.
      * @return {@code Piece}
      */
-    Piece getPiece() {
+    public Piece getPiece() {
         return this.piece;
     }
 
@@ -39,7 +39,7 @@ public class Spot {
      * spot on the board.
      * @return {@code int}
      */
-    int getX() {
+    public int getX() {
         return this.x;
     }
 
@@ -48,7 +48,7 @@ public class Spot {
      * spot on the board.
      * @return {@code int}
      */
-    int getY() {
+    public int getY() {
         return this.y;
     }
 
@@ -57,7 +57,7 @@ public class Spot {
      * Sets the current {@code Piece} of the spot.
      * @param piece
      */
-    void setPiece(Piece piece) {
+    public void setPiece(Piece piece) {
         this.piece = piece;
     }
 
@@ -65,7 +65,7 @@ public class Spot {
      * Sets the X position of the current spot.
      * @param x
      */
-    void setX(int x) {
+    public void setX(int x) {
         this.x = x;
     }
 
@@ -73,7 +73,7 @@ public class Spot {
      * Sets the Y position of the current spot.
      * @param y
      */
-    void setY(int y) {
+    public void setY(int y) {
         this.y = y;
     }
 }
