@@ -42,7 +42,7 @@ public class Pawn extends Piece {
         if (startX == endX && endY == startY + direction && end.getPiece() != null) return true;
 
         // First move
-        if (startX == endX && endY == startY + (2*direction) && end.getPiece() != null) return true;
+        if (firstMove && startX == endX && endY == startY + (2*direction) && end.getPiece() != null) return true;
 
         // En passant
         if (enPassant && Math.abs(endX - startX) == 1 && endY == startY + direction && end.getPiece() != null) return true;
