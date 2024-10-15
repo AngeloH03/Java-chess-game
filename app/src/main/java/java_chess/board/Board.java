@@ -2,6 +2,10 @@ package java_chess.board;
 
 import java_chess.pieces.Pawn;
 
+/**
+ * The {@code Board} class creates an array of 8*8 squares where
+ * {@code Pieces} can be placed
+ */
 public class Board {
     Spot[][] boxes;
 
@@ -9,6 +13,13 @@ public class Board {
         this.resetBoard();
     }
 
+    /**
+     * Returns a specific {@code Spot} on the board
+     * @param y
+     * @param x
+     * @return {@code Spot}
+     * @throws Exception
+     */
     public Spot getSpot(int y, int x) throws Exception {
         if (x < 0 || x > 7 || y < 0 || y > 7) {
             throw new Exception("Index out of bound");
@@ -16,6 +27,9 @@ public class Board {
         return boxes[x][y];
     }
 
+    /**
+     * Sets the board back to its initial state
+     */
     public void resetBoard() {
         // White Pieces
         boxes[0][0] = new Spot(0,0, null);
