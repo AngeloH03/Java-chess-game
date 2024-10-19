@@ -45,27 +45,34 @@ public class King extends Piece {
             // being attacked if so return true 
             return true; 
         }
-  
-        return this.isValidCastling(board, start, end); 
+        if (x == 2 && y == 0) return this.isValidCastling(board, start, end); // Check for castling
+        return false;
     } 
   
     private boolean isValidCastling(Board board, Spot start, Spot end) { 
-  
-        if (this.isCastlingDone()) { 
+        if (this.isCastlingDone()) {
             return false; 
         }
-  
-        int x = Math.abs(start.getX() - end.getX());
 
-        try {
-            // Checks wether the king can move two squares aside and if there is a rook further
-            if (firstMove 
-                && x == 2 && board.getSpot(x + 2, end.getY()).getPiece() != null 
-                || x == 2 && board.getSpot(x + 3, end.getY()).getPiece() != null) {
-                return true;
-            }
-        } catch (Exception e) {}
-        return false;
+        int x = Math.abs(start.getX() - end.getX()); // Distance X
+        
+        if (!this.firstMove) return false;
+        if (x != 2) return false; // The piece is moving exactly 2 squares ahead
+
+        if (end.getX() > start.getX()) { // Kingside
+            try {
+                // Check if there's no piece between king and rook
+                if (board.getSpot(5, start.getY()).getPiece() != null ||
+                    board.getSpot(6, start.getY()).getPiece() != null) return false;
+            } catch (Exception e) {}
+        } else { // Queenside
+            try {
+                // Check if there's no piece between king and rook
+                if (board.getSpot(1, start.getY()).getPiece() != null || 
+                    board.getSpot(2, start.getY()).getPiece() != null) return false;
+            } catch (Exception e) {}
+        }
+        return true;
     }
 
 }
