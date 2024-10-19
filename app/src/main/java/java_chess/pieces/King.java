@@ -3,29 +3,40 @@ package java_chess.pieces;
 import java_chess.board.Board;
 import java_chess.board.Spot;
 
+/**
+ * The {@code King} class represents a King piece
+ * from a chess game.
+ * 
+ * Inherits from {@code Piece}.
+ */
 public class King extends Piece { 
+    // Attributes
     private boolean castlingDone = false; 
-    private boolean firstMove = true;
+    private final boolean firstMove = true;
   
+    // Constructor(s)
+    /**
+     * Creates a new instance of {@code King}.
+     * @param white
+     */
     public King(boolean white) { 
         super(white); 
-    } 
+    }
   
+    // Getters
     public boolean isCastlingDone() { 
         return this.castlingDone; 
-    } 
+    }
   
+    // Setters
     public void setCastlingDone(boolean castlingDone) { 
         this.castlingDone = castlingDone; 
-    } 
+    }
   
     @Override
     public boolean canMove(Board board, Spot start, Spot end) { 
-        // we can't move the piece to a Spot that  
-        // has a piece of the same color 
-        if (end.getPiece().isWhite() == this.isWhite()) { 
-            return false; 
-        } 
+        // Cannot move a Piece on a spot that has the same color as the current one
+        if (end.getPiece().isWhite() == this.isWhite()) return false;
   
         int x = Math.abs(start.getX() - end.getX()); 
         int y = Math.abs(start.getY() - end.getY()); 
@@ -33,7 +44,7 @@ public class King extends Piece {
             // check if this move will not result in the king 
             // being attacked if so return true 
             return true; 
-        } 
+        }
   
         return this.isValidCastling(board, start, end); 
     } 
@@ -42,7 +53,7 @@ public class King extends Piece {
   
         if (this.isCastlingDone()) { 
             return false; 
-        } 
+        }
   
         int x = Math.abs(start.getX() - end.getX());
 
@@ -53,9 +64,7 @@ public class King extends Piece {
                 || x == 2 && board.getSpot(x + 3, end.getY()).getPiece() != null) {
                 return true;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (Exception e) {}
         return false;
     }
 

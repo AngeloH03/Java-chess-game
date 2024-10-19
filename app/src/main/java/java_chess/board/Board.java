@@ -30,47 +30,47 @@ public class Board {
     /**
      * Sets the board back to its initial state
      */
-    public void resetBoard() {
+    private void resetBoard() {
         // White Pieces
         boxes[0][0] = new Spot(0,0, null);
-        boxes[0][1] = new Spot(0,1, null);
-        boxes[0][2] = new Spot(0,2, null);
-        boxes[0][3] = new Spot(0,3, null);
-        boxes[0][4] = new Spot(0,4, null);
-        boxes[0][5] = new Spot(0,5, null);
-        boxes[0][6] = new Spot(0,6, null);
-        boxes[0][7] = new Spot(0,7, null);
+        boxes[1][0] = new Spot(1,0, null);
+        boxes[2][0] = new Spot(2,0, null);
+        boxes[3][0] = new Spot(3,0, null);
+        boxes[4][0] = new Spot(4,0, null);
+        boxes[5][0] = new Spot(5,0, null);
+        boxes[6][0] = new Spot(6,0, null);
+        boxes[7][0] = new Spot(7,0, null);
 
-        boxes[1][0] = new Spot(1, 0, new Pawn(true));
+        boxes[0][1] = new Spot(0, 1, new Pawn(true));
         boxes[1][1] = new Spot(1, 1, new Pawn(true));
-        boxes[1][2] = new Spot(1, 2, new Pawn(true));
-        boxes[1][3] = new Spot(1, 3, new Pawn(true));
-        boxes[1][4] = new Spot(1, 4, new Pawn(true));
-        boxes[1][5] = new Spot(1, 5, new Pawn(true));
-        boxes[1][6] = new Spot(1, 6, new Pawn(true));
-        boxes[1][7] = new Spot(1, 7, new Pawn(true));
+        boxes[2][1] = new Spot(2, 1, new Pawn(true));
+        boxes[3][1] = new Spot(3, 1, new Pawn(true));
+        boxes[4][1] = new Spot(4, 1, new Pawn(true));
+        boxes[5][1] = new Spot(5, 1, new Pawn(true));
+        boxes[6][1] = new Spot(6, 1, new Pawn(true));
+        boxes[7][1] = new Spot(7, 1, new Pawn(true));
 
         // Black Pieces
-        boxes[6][0] = new Spot(6, 0, new Pawn(false));
-        boxes[6][1] = new Spot(6, 1, new Pawn(false));
-        boxes[6][2] = new Spot(6, 2, new Pawn(false));
-        boxes[6][3] = new Spot(6, 3, new Pawn(false));
-        boxes[6][4] = new Spot(6, 4, new Pawn(false));
-        boxes[6][5] = new Spot(6, 5, new Pawn(false));
+        boxes[0][6] = new Spot(0, 6, new Pawn(false));
+        boxes[1][6] = new Spot(1, 6, new Pawn(false));
+        boxes[2][6] = new Spot(2, 6, new Pawn(false));
+        boxes[3][6] = new Spot(3, 6, new Pawn(false));
+        boxes[4][6] = new Spot(4, 6, new Pawn(false));
+        boxes[5][6] = new Spot(5, 6, new Pawn(false));
         boxes[6][6] = new Spot(6, 6, new Pawn(false));
-        boxes[6][7] = new Spot(6, 7, new Pawn(false));
+        boxes[7][6] = new Spot(7, 6, new Pawn(false));
 
-        boxes[7][0] = new Spot(7,0, null);
-        boxes[7][1] = new Spot(7,1, null);
-        boxes[7][2] = new Spot(7,2, null);
-        boxes[7][3] = new Spot(7,3, null);
-        boxes[7][4] = new Spot(7,4, null);
-        boxes[7][5] = new Spot(7,5, null);
-        boxes[7][6] = new Spot(7,6, null);
+        boxes[0][7] = new Spot(0,7, null);
+        boxes[1][7] = new Spot(1,7, null);
+        boxes[2][7] = new Spot(2,7, null);
+        boxes[3][7] = new Spot(3,7, null);
+        boxes[4][7] = new Spot(4,7, null);
+        boxes[5][7] = new Spot(5,7, null);
+        boxes[6][7] = new Spot(6,7, null);
         boxes[7][7] = new Spot(7,7, null);
 
-        for (int x = 2; x < 6; x++) {
-            for (int y = 0; y < 8; y++) {
+        for (int y = 2; y < 6; y++) {
+            for (int x = 0; x < 8; x++) {
                 boxes[x][y] = new Spot(x, y, null);
             }
         }

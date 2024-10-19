@@ -1,0 +1,68 @@
+package java_chess.pieces;
+
+/**
+ * The {@code Rook} class represents a Rook piece
+ * from a chess game.
+ * 
+ * Inherits from {@code Piece}.
+ */
+class Rook extends Piece {
+    private boolean castlingDone = false;
+    private final firstMove = true;
+
+    /**
+     * Creates a new instance of {@code Rook}.
+     * @param white
+     */
+    public Rook(boolean white) {
+        super(white);
+    }
+
+    // Getters
+    public boolean isCastlingDone() {
+        return this.castlingDone;
+    }
+
+    // Setters
+    public void setCastlingDone(boolean castlingDone) {
+        this.castlingDone = castlingDone;
+    }
+
+    @Override
+    public boolean canMove(Board board, Spot start, Spot end) {
+        // Cannot move a Piece on a spot that has the same color as the current one
+        if (end.getPiece().isWhite() == this.white) return false;
+
+        int x = Math.abs(start.getX() - end.getX());
+        int y = Math.abs(start.getY() - end.getY());
+
+        // Moveset
+        if (x != 0 && y != 0) return false; // Can only move vertically or horizontally
+        if (x != 0 && y == 0) return true; // Horizontal movement
+        if (x == 0 && y != 0) return true; // Vertical movement
+        if (x == 2 && y == 0) return this.isValidCastling(board, start, end); // Check for castling
+        
+        return false;
+    }
+
+    private boolean isValidCastling(Board board, Spot start, Spot end) { 
+  
+        if (this.isCastlingDone()) {
+            return false; 
+        }
+
+        if (!this.firstMove) return false;
+  
+        int x = Math.abs(start.getX() - end.getX());
+
+        try {
+            // Checks wether the rook can move two squares aside and if there is a king further
+            if (firstMove 
+                && x == 2 && board.getSpot(x + 2, end.getY()).getPiece() != null 
+                || x == 2 && board.getSpot(x + 3, end.getY()).getPiece() != null) {
+                return true;
+            }
+        } catch (Exception e) {}
+        return false;
+    }
+}
