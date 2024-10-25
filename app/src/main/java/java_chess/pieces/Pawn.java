@@ -10,7 +10,7 @@ import java_chess.board.Spot;
  * Inherits from {@code Piece}.
  */
 public class Pawn extends Piece {
-    // Attributs
+    // Attributes
     boolean firstMove = true;
     boolean enPassant = false;
 
@@ -38,16 +38,15 @@ public class Pawn extends Piece {
 
         int direction = this.isWhite() ? -1 : 1;
 
+        // Moveset
         // Move forward
-        if (startX == endX && endY == startY + direction && end.getPiece() != null) return true;
+        if (startX == endX && endY == startY + direction && end.getPiece() == null) return true;
 
         // First move
-        if (firstMove && startX == endX && endY == startY + (2*direction) && end.getPiece() != null) return true;
-
+        if (firstMove && startX == endX && endY == startY + (2*direction) && end.getPiece() == null) return true;
+        
         // En passant
-        if (enPassant && Math.abs(endX - startX) == 1 && endY == startY + direction && end.getPiece() != null) return true;
-
-        return false;
+        return enPassant && Math.abs(endX - startX) == 1 && endY == startY + direction && end.getPiece() == null;
     };
     
 }
