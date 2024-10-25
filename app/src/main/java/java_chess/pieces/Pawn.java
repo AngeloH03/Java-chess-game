@@ -38,6 +38,7 @@ public class Pawn extends Piece {
 
         int direction = this.isWhite() ? -1 : 1;
 
+        // Moveset
         // Move forward
         if (startX == endX && endY == startY + direction && end.getPiece() == null) return true;
 
