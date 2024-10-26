@@ -1,14 +1,17 @@
 package java_chess.pieces;
 
+import java_chess.board.Board;
+import java_chess.board.Spot;
+
 /**
  * The {@code Rook} class represents a Rook piece
  * from a chess game.
  * 
  * Inherits from {@code Piece}.
  */
-class Rook extends Piece {
+public class Rook extends Piece {
     private boolean castlingDone = false;
-    private final firstMove = true;
+    private final boolean firstMove = true;
 
     /**
      * Creates a new instance of {@code Rook}.
@@ -70,4 +73,5 @@ class Rook extends Piece {
         }
         return true;
     }
+    
 }

@@ -3,6 +3,12 @@ package java_chess.pieces;
 import java_chess.board.Board;
 import java_chess.board.Spot;
 
+/**
+ * The {@code Knight} class represents a Knight piece
+ * from a chess game.
+ * 
+ * Inherits from {@code Piece}.
+ */
 public class Knight extends Piece {
 
     public Knight(boolean white) {
