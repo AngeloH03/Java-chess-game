@@ -15,10 +15,10 @@ public class Rook extends Piece {
 
     /**
      * Creates a new instance of {@code Rook}.
-     * @param white
+     * @param color
      */
-    public Rook(boolean white) {
-        super(white);
+    public Rook(PieceColor color) {
+        super(color);
     }
 
     // Getters
@@ -34,7 +34,7 @@ public class Rook extends Piece {
     @Override
     public boolean canMove(Board board, Spot start, Spot end) {
         // Cannot move a Piece on a spot that has the same color as the current one
-        if (end.getPiece().isWhite() == this.white) return false;
+        if (end.getPiece().getColor() == color) return false;
 
         int x = Math.abs(start.getX() - end.getX()); // Distance X
         int y = Math.abs(start.getY() - end.getY()); // Distance Y

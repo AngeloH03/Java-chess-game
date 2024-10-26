@@ -19,7 +19,7 @@ public class Spot {
      * @param y
      * @param piece
      */
-    Spot(int x, int y, Piece piece) {
+    public Spot(int x, int y, Piece piece) {
         this.piece = piece;
         this.x = x;
         this.y = y;

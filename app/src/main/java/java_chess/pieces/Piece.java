@@ -9,16 +9,16 @@ import java_chess.board.Spot;
  */
 public abstract class Piece {
     // Attributes
-    boolean white;
+    PieceColor color;
     boolean killed;
 
     // Constructor(s)
     /**
      * Create a new instance of {@code Piece}.
-     * @param white
+     * @param color
      */
-    public Piece(boolean white) {
-        this.white = white;
+    public Piece(PieceColor color) {
+        this.color = color;
     }
 
     // Getters
@@ -26,8 +26,8 @@ public abstract class Piece {
      * Checks wether the {@code Piece} is white or not.
      * @return boolean
      */
-    public boolean isWhite() {
-        return white;
+    public PieceColor getColor() {
+        return color;
     }
 
     /**
@@ -41,10 +41,10 @@ public abstract class Piece {
     // Setters
     /**
      * Sets the {@code isWhite} attribute of a {@code Piece}.
-     * @param isWhite
+     * @param PieceColor
      */
-    public void setWhite(boolean white) {
-        this.white = white;
+    public void setColor(PieceColor color) {
+        this.color = color;
     }
 
     /**

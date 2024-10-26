@@ -17,16 +17,16 @@ public class Pawn extends Piece {
     // Constructor(s)
     /**
      * Creates a new instance of {@code Pawn}.
-     * @param white
+     * @param color
      */
-    public Pawn(boolean white) {
-        super(white);
+    public Pawn(PieceColor color) {
+        super(color);
     }
 
     @Override
     public boolean canMove(Board board, Spot start, Spot end) {
         // Cannot move a Piece on a spot that has the same color as the current one
-        if (end.getPiece().isWhite() == this.isWhite()) return false;
+        if (end.getPiece().getColor() == color) return false;
 
         // Start
         int startX = start.getX();
@@ -36,7 +36,7 @@ public class Pawn extends Piece {
         int endX = end.getX();
         int endY = end.getY();
 
-        int direction = this.isWhite() ? -1 : 1;
+        int direction = color == PieceColor.WHITE ? -1 : 1;
 
         // Moveset
         // Move forward

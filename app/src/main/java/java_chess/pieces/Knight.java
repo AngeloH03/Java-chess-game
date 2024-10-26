@@ -11,14 +11,18 @@ import java_chess.board.Spot;
  */
 public class Knight extends Piece {
 
-    public Knight(boolean white) {
-        super(white);
+    /**
+     * Creates a new instance of {@code Knight}.
+     * @param color
+     */
+    public Knight(PieceColor color) {
+        super(color);
     }
 
     @Override
     public boolean canMove(Board board, Spot start, Spot end) {
         // Cannot move a Piece on a spot that has the same color as the current one
-        if (end.getPiece().isWhite() == this.isWhite()) return false;
+        if (end.getPiece().getColor() == this.getColor()) return false;
 
         // Start
         int startX = start.getX();

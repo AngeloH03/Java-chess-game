@@ -11,14 +11,18 @@ import java_chess.board.Spot;
  */
 public class Bishop extends Piece {
 
-    public Bishop(boolean white) {
-        super(white);
+    /**
+     * Creates a new instance of {@code Bishop}.
+     * @param color
+     */
+    public Bishop(PieceColor color) {
+        super(color);
     }
 
     @Override
     public boolean canMove(Board board, Spot start, Spot end) {
         // Cannot move a Piece on a spot that has the same color as the current one
-        if (end.getPiece().isWhite() == this.isWhite()) return false;
+        if (end.getPiece().getColor() == color) return false;
         
         // Distances
         int x = Math.abs(end.getX() - start.getX());

@@ -4,6 +4,7 @@ import java_chess.pieces.Bishop;
 import java_chess.pieces.King;
 import java_chess.pieces.Knight;
 import java_chess.pieces.Pawn;
+import java_chess.pieces.PieceColor;
 import java_chess.pieces.Queen;
 import java_chess.pieces.Rook;
 
@@ -37,42 +38,42 @@ public class Board {
      */
     private void resetBoard() {
         // White Pieces
-        boxes[0][0] = new Spot(0,0, new Rook(true));
-        boxes[1][0] = new Spot(1,0, new Knight(true));
-        boxes[2][0] = new Spot(2,0, new Bishop(true));
-        boxes[3][0] = new Spot(3,0, new Queen(true));
-        boxes[4][0] = new Spot(4,0, new King(true));
-        boxes[5][0] = new Spot(5,0, new Bishop(true));
-        boxes[6][0] = new Spot(6,0, new Knight(true));
-        boxes[7][0] = new Spot(7,0, new Rook(true));
+        boxes[0][0] = new Spot(0,0, new Rook(PieceColor.WHITE));
+        boxes[1][0] = new Spot(1,0, new Knight(PieceColor.WHITE));
+        boxes[2][0] = new Spot(2,0, new Bishop(PieceColor.WHITE));
+        boxes[3][0] = new Spot(3,0, new Queen(PieceColor.WHITE));
+        boxes[4][0] = new Spot(4,0, new King(PieceColor.WHITE));
+        boxes[5][0] = new Spot(5,0, new Bishop(PieceColor.WHITE));
+        boxes[6][0] = new Spot(6,0, new Knight(PieceColor.WHITE));
+        boxes[7][0] = new Spot(7,0, new Rook(PieceColor.WHITE));
 
-        boxes[0][1] = new Spot(0, 1, new Pawn(true));
-        boxes[1][1] = new Spot(1, 1, new Pawn(true));
-        boxes[2][1] = new Spot(2, 1, new Pawn(true));
-        boxes[3][1] = new Spot(3, 1, new Pawn(true));
-        boxes[4][1] = new Spot(4, 1, new Pawn(true));
-        boxes[5][1] = new Spot(5, 1, new Pawn(true));
-        boxes[6][1] = new Spot(6, 1, new Pawn(true));
-        boxes[7][1] = new Spot(7, 1, new Pawn(true));
+        boxes[0][1] = new Spot(0, 1, new Pawn(PieceColor.WHITE));
+        boxes[1][1] = new Spot(1, 1, new Pawn(PieceColor.WHITE));
+        boxes[2][1] = new Spot(2, 1, new Pawn(PieceColor.WHITE));
+        boxes[3][1] = new Spot(3, 1, new Pawn(PieceColor.WHITE));
+        boxes[4][1] = new Spot(4, 1, new Pawn(PieceColor.WHITE));
+        boxes[5][1] = new Spot(5, 1, new Pawn(PieceColor.WHITE));
+        boxes[6][1] = new Spot(6, 1, new Pawn(PieceColor.WHITE));
+        boxes[7][1] = new Spot(7, 1, new Pawn(PieceColor.WHITE));
 
         // Black Pieces
-        boxes[0][6] = new Spot(0, 6, new Pawn(false));
-        boxes[1][6] = new Spot(1, 6, new Pawn(false));
-        boxes[2][6] = new Spot(2, 6, new Pawn(false));
-        boxes[3][6] = new Spot(3, 6, new Pawn(false));
-        boxes[4][6] = new Spot(4, 6, new Pawn(false));
-        boxes[5][6] = new Spot(5, 6, new Pawn(false));
-        boxes[6][6] = new Spot(6, 6, new Pawn(false));
-        boxes[7][6] = new Spot(7, 6, new Pawn(false));
+        boxes[0][6] = new Spot(0, 6, new Pawn(PieceColor.BLACK));
+        boxes[1][6] = new Spot(1, 6, new Pawn(PieceColor.BLACK));
+        boxes[2][6] = new Spot(2, 6, new Pawn(PieceColor.BLACK));
+        boxes[3][6] = new Spot(3, 6, new Pawn(PieceColor.BLACK));
+        boxes[4][6] = new Spot(4, 6, new Pawn(PieceColor.BLACK));
+        boxes[5][6] = new Spot(5, 6, new Pawn(PieceColor.BLACK));
+        boxes[6][6] = new Spot(6, 6, new Pawn(PieceColor.BLACK));
+        boxes[7][6] = new Spot(7, 6, new Pawn(PieceColor.BLACK));
 
-        boxes[0][7] = new Spot(0,7, new Rook(false));
-        boxes[1][7] = new Spot(1,7, new Knight(false));
-        boxes[2][7] = new Spot(2,7, new Bishop(false));
-        boxes[3][7] = new Spot(3,7, new Queen(false));
-        boxes[4][7] = new Spot(4,7, new King(false));
-        boxes[5][7] = new Spot(5,7, new Bishop(false));
-        boxes[6][7] = new Spot(6,7, new Knight(false));
-        boxes[7][7] = new Spot(7,7, new Rook(false));
+        boxes[0][7] = new Spot(0,7, new Rook(PieceColor.BLACK));
+        boxes[1][7] = new Spot(1,7, new Knight(PieceColor.BLACK));
+        boxes[2][7] = new Spot(2,7, new Bishop(PieceColor.BLACK));
+        boxes[3][7] = new Spot(3,7, new Queen(PieceColor.BLACK));
+        boxes[4][7] = new Spot(4,7, new King(PieceColor.BLACK));
+        boxes[5][7] = new Spot(5,7, new Bishop(PieceColor.BLACK));
+        boxes[6][7] = new Spot(6,7, new Knight(PieceColor.BLACK));
+        boxes[7][7] = new Spot(7,7, new Rook(PieceColor.BLACK));
 
         for (int y = 2; y < 6; y++) {
             for (int x = 0; x < 8; x++) {
