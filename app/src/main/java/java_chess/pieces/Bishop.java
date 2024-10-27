@@ -24,22 +24,33 @@ public class Bishop extends Piece {
         // Cannot move a Piece on a spot that has the same color as the current one
         if (end.getPiece().getColor() == this.getColor()) return false;
         
+        // Start
+        int startX = start.getX();
+        int startY = start.getY();
+
+        // End
+        int endX = end.getX();
+        int endY = end.getY();
+
         // Distances
         int x = Math.abs(end.getX() - start.getX());
         int y = Math.abs(end.getY() - start.getY());
 
         // Moveset
-        for (int row = start.getX(); row < end.getX(); row++) {
-            for (int col = start.getY(); col < end.getY(); col++) {
-                if (board.getSpot(row, col).getPiece() == null) {
-                    if (x >= 1 && y >= 1) {
-                        return true; // Diagonnal movement
-                    }
-                }
+        if (x != 0 && y != 0) { // Diagonal movement
+            int directionX = (endX - startX) > 0 ? 1 : -1;
+            int directionY = (endY - startY) > 0 ? 1 : -1;
+            int currentX = startX + directionX;
+            int currentY = startY + directionY;
+
+            while (currentX != endX && currentY != endY) {
+                if (board.getSpot(currentX, currentY).getPiece() != null) return false;
+                currentX++;
+                currentY++;
             }
-        } 
-        if (x >= 1 && y == 0) return false; // Can't move horizontally
-        if (x == 0 && y >= 1) return false; // Can't move vertically
+        }
+        if (x != y) return false; // No horizontal or vertical movement
+        
         return false;
     }
 

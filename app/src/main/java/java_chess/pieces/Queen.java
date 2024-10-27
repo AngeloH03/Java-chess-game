@@ -24,24 +24,45 @@ public class Queen extends Piece {
         // Cannot move a Piece on a spot that has the same color as the current one
         if (end.getPiece().getColor() == this.getColor()) return false;
 
+        // Start
+        int startX = start.getX();
+        int startY = start.getY();
+
+        // End
+        int endX = end.getX();
+        int endY = end.getY();
+
         // Distances
         int x = Math.abs(end.getX() - start.getX());
         int y = Math.abs(end.getY() - start.getY());
 
         // Moveset
-        for (int row = start.getX(); row < end.getX(); row++) {
-            for (int col = start.getY(); col < end.getY(); col++) {
-                if (board.getSpot(row, col).getPiece() == null) {
-                    if (x >= 1 && y == 0) return true; // Horizontal movement
-                    if (x == 0 && y >= 1) return true; // Vertical movement
-                    if (x >= 1 && y >= 1) return true; // Diagonal movement
+        if (x == 0) { // Vertical movement
+            int direction = (endY - startY) > 0 ? 1 : -1;
+            for (int i = startY + direction; i != endY; i += direction) {
+                if (board.getSpot(startX, i).getPiece() != null) return false;
+            }
+        } else if (y == 0) { // Horizontal movement
+            int direction = (endX - startX) > 0 ? 1 : -1;
+            for (int i = startX + direction; i != endY; i += direction) {
+                if (board.getSpot(i, startY).getPiece() != null) return false;
+            }
+        } else if (x != 0 && y != 0) { // Diagonal movement
+            int directionX = (endX - startX) > 0 ? 1 : -1;
+            int directionY = (endY - startY) > 0 ? 1 : -1;
+            for (int i = startX + directionX; i < endX; i += directionX) {
+                for (int j = startY + directionY; j < endY; j += directionY) {
+                    if (i == j) {
+                        if (board.getSpot(i, j).getPiece() != null) return false;
+                    }
                 }
             }
         }
+
         if (x >= 1 && y == 1) return false;
         if (x == 1 && y >= 1) return false;
 
-        return false;
+        return true;
     }
 
 }

@@ -36,22 +36,33 @@ public class Rook extends Piece {
         // Cannot move a Piece on a spot that has the same color as the current one
         if (end.getPiece().getColor() == this.getColor()) return false;
 
+        // Start
+        int startX = start.getX();
+        int startY = start.getY();
+
+        // End
+        int endX = end.getX();
+        int endY = end.getY();
+
         int x = Math.abs(start.getX() - end.getX()); // Distance X
         int y = Math.abs(start.getY() - end.getY()); // Distance Y
 
         // Moveset
-        if (x != 0 && y != 0) return false; // Can only move vertically or horizontally
-        for (int row = start.getX(); row < end.getX(); row++) {
-            for (int col = start.getY(); col < end.getY(); col++) {
-                if (board.getSpot(row, col).getPiece() == null) {
-                    if (x >= 1 && y == 0) return true; // Horizontal movement
-                    if (x == 0 && y >= 1) return true; // Vertical movement
-                }
+        if (x != 0 && y != 0) return false;
+        if (x == 0) { // Vertical movement
+            int direction = (endY - startY) > 0 ? 1 : -1;
+            for (int i = startY + direction; i != endY; i += direction) {
+                if (board.getSpot(startX, i).getPiece() != null) return false;
+            }
+        } else { // Horizontal movement
+            int direction = (endX - startX) > 0 ? 1 : -1;
+            for (int i = startX + direction; i != endY; i += direction) {
+                if (board.getSpot(i, startY).getPiece() != null) return false;
             }
         }
         if (x == 2 && y == 0) return this.isValidCastling(board, start, end); // Check for castling
         
-        return false;
+        return true;
     }
 
     private boolean isValidCastling(Board board, Spot start, Spot end) { 
