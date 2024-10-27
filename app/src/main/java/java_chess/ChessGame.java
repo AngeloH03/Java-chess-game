@@ -44,20 +44,57 @@ public class ChessGame {
         return false;
     }
 
+    /**
+     * Checks if a {@code King} piece is in check.
+     * @param kingColor
+     * @return boolean
+     * @throws Exception
+     */
     public boolean isInCheck(PieceColor kingColor) throws Exception {
-        Spot kingSpot = findKingSpot(kingColor);
+        Spot kingSpot = findKingSpot(kingColor); // Find the king
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; row++) {
                 Piece piece = board.getSpot(row, col).getPiece();
                 if (piece != null && piece.getColor() != kingColor) {
-                    return true; // HEEELP !!!!!!!!
+                    if (piece.canMove(board, new Spot(row, col, null), kingSpot)) return true; // An opponent piece can capture the king.
                 }
             }
         }
         return false;
     }
 
-    public Spot findKingSpot(PieceColor color) throws Exception {
+    public boolean isCheckMate(PieceColor kingColor) throws Exception {
+        // If king is not in check then it cannot be chackmate
+        if (!isInCheck(kingColor)) return false;
+
+        Spot kingSpot = findKingSpot(kingColor);
+        King king = (King) board.getSpot(kingSpot.getX(), kingSpot.getY()).getPiece();
+
+        // Find a move that gets the king out of check
+        for (int rowOffset = -1; rowOffset <= 1; rowOffset++) {
+            for (int colOffset = -1; colOffset <= 1; colOffset++) {
+                if (rowOffset == 0 && colOffset == 0) {
+                    continue; // Skip the current position of the king
+                }
+                Spot newSpot = new Spot(kingSpot.getX() + rowOffset, kingSpot.getY() + colOffset, null);
+                // Check if movind the king to a new position is a legal move and will not result in a check
+                if (isPositionOnBoard(newSpot) && 
+                king.canMove(board, new Spot(rowOffset, colOffset, king), kingSpot) &&
+                !wouldBeInCheckAfterMove(kingColor, kingSpot, newSpot)) {
+                    return false; // Found a move that gets the king out of check so it's not checkmate
+                }
+            }
+        }
+        return true; // Checkmate
+    }
+
+    /**
+     * Method used to locate a {@code King} piece by passing its color as a parameter.
+     * @param color
+     * @return Spot
+     * @throws Exception
+     */
+    private Spot findKingSpot(PieceColor color) throws Exception {
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
                 Piece piece = board.getSpot(row, col).getPiece();
@@ -69,4 +106,24 @@ public class ChessGame {
         throw new RuntimeException("King not found, which should never happen.");
     }
     
+    private boolean isPositionOnBoard(Spot spot) throws Exception {
+        return board.getSpot(spot.getX(), spot.getY()).getX() >= 0 && board.getSpot(spot.getX(), spot.getY()).getX() < 8 &&
+        board.getSpot(spot.getX(), spot.getY()).getY() >= 0 && board.getSpot(spot.getX(), spot.getY()).getY() < 8;
+    }
+
+    private boolean wouldBeInCheckAfterMove(PieceColor kingColor, Spot start, Spot end) throws Exception {
+        // Simulate move temporarily
+        Piece temp = board.getSpot(end.getX(), end.getY()).getPiece();
+        board.getSpot(end.getX(), end.getY()).setPiece(board.getSpot(start.getX(), start.getY()).getPiece());
+        board.getSpot(start.getX(), start.getY()).setPiece(null);
+
+        boolean inCheck = isInCheck(kingColor);
+
+        // Undo the move
+        board.getSpot(start.getX(), start.getY()).setPiece(board.getSpot(end.getX(), end.getY()).getPiece());
+        board.getSpot(end.getX(), end.getY()).setPiece(temp);
+
+        return inCheck;
+    }
+
 }
