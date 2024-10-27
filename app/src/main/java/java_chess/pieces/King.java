@@ -36,7 +36,7 @@ public class King extends Piece {
     @Override
     public boolean canMove(Board board, Spot start, Spot end) { 
         // Cannot move a Piece on a spot that has the same color as the current one
-        if (end.getPiece().getColor() == color) return false;
+        if (end.getPiece().getColor() == this.getColor()) return false;
   
         int x = Math.abs(start.getX() - end.getX()); 
         int y = Math.abs(start.getY() - end.getY()); 

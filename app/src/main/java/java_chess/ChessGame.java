@@ -28,8 +28,9 @@ public class ChessGame {
      * @param start
      * @param end
      * @return
+     * @throws Exception 
      */
-    public boolean makeMove(Spot start, Spot end) {
+    public boolean makeMove(Spot start, Spot end) throws Exception {
         Piece currentPiece = start.getPiece();
 
         // No piece at start position or not the player's turn

@@ -37,7 +37,7 @@ public class Knight extends Piece {
         int y = Math.abs(endY - startY);
         
         // Moveset
-        return endX == startX + 2 && y == 1 || endY == startY +2 && x == 1;
+        return x == 2 && y == 1 || y == 2 && x == 1; // L moveset
     }
     
 }

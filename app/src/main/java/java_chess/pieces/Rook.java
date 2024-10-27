@@ -32,17 +32,23 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean canMove(Board board, Spot start, Spot end) {
+    public boolean canMove(Board board, Spot start, Spot end) throws Exception {
         // Cannot move a Piece on a spot that has the same color as the current one
-        if (end.getPiece().getColor() == color) return false;
+        if (end.getPiece().getColor() == this.getColor()) return false;
 
         int x = Math.abs(start.getX() - end.getX()); // Distance X
         int y = Math.abs(start.getY() - end.getY()); // Distance Y
 
         // Moveset
         if (x != 0 && y != 0) return false; // Can only move vertically or horizontally
-        if (x != 0 && y == 0) return true; // Horizontal movement
-        if (x == 0 && y != 0) return true; // Vertical movement
+        for (int row = start.getX(); row < end.getX(); row++) {
+            for (int col = start.getY(); col < end.getY(); col++) {
+                if (board.getSpot(row, col).getPiece() == null) {
+                    if (x >= 1 && y == 0) return true; // Horizontal movement
+                    if (x == 0 && y >= 1) return true; // Vertical movement
+                }
+            }
+        }
         if (x == 2 && y == 0) return this.isValidCastling(board, start, end); // Check for castling
         
         return false;

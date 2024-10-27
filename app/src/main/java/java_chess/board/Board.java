@@ -10,15 +10,18 @@ import java_chess.pieces.Rook;
 
 /**
  * The {@code Board} class creates an array of 8*8 squares where
- * instances of {@code Piece} can be placed
+ * instances of {@code Piece} can be placed.
  */
 public class Board {
-    Spot[][] boxes;
+    // Attributes
+    private Spot[][] boxes;
 
+    // Constructor(s)
     public Board() {
         this.resetBoard();
     }
 
+    // Getters
     /**
      * Returns a specific {@code Spot} on the board
      * @param y
@@ -33,6 +36,7 @@ public class Board {
         return boxes[x][y];
     }
 
+    // Setters
     /**
      * Sets the board back to its initial state
      */

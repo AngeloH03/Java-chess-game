@@ -24,9 +24,9 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean canMove(Board board, Spot start, Spot end) {
+    public boolean canMove(Board board, Spot start, Spot end) throws Exception {
         // Cannot move a Piece on a spot that has the same color as the current one
-        if (end.getPiece().getColor() == color) return false;
+        if (end.getPiece().getColor() == this.getColor()) return false;
 
         // Start
         int startX = start.getX();
@@ -36,17 +36,32 @@ public class Pawn extends Piece {
         int endX = end.getX();
         int endY = end.getY();
 
-        int direction = color == PieceColor.WHITE ? -1 : 1;
+        // Distances
+        int x = Math.abs(endX - startX);
+        int y = Math.abs(endY - startY);
+
+        int direction = this.getColor() == PieceColor.WHITE ? -1 : 1;
 
         // Moveset
-        // Move forward
-        if (startX == endX && endY == startY + direction && end.getPiece() == null) return true;
+       
+        for (int row = start.getX(); row < end.getX(); row++) {
+            for (int col = start.getY(); col < end.getY(); col++) {
+                if (board.getSpot(row, col).getPiece() == null) {
+                    if (x == 0 && endY == startY + direction && end.getPiece() == null) return true; // Move forward
+                    if (firstMove && x == 0 && endY == startY + (2*direction) && end.getPiece() == null) return true; // First move
+                }
+            }
+        }
 
-        // First move
-        if (firstMove && startX == endX && endY == startY + (2*direction) && end.getPiece() == null) return true;
-        
+        // Diagonal capture
+        if (end.getPiece() != null && end.getPiece().getColor() != this.getColor() && x == 1 && y == 1) return true;
+
         // En passant
-        return enPassant && Math.abs(endX - startX) == 1 && endY == startY + direction && end.getPiece() == null;
+        if (start.getY() == 5 && direction == 1 || start.getY() == 4 && direction == -1) enPassant = true;
+
+        if (enPassant && end.getPiece() == null && board.getSpot(startX+1, startY).getPiece() instanceof Pawn && x == 1 && y == 1) return true;
+
+        return false;
     };
     
 }
