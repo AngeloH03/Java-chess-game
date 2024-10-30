@@ -43,13 +43,10 @@ public class Pawn extends Piece {
         int direction = this.getColor() == PieceColor.WHITE ? -1 : 1;
 
         // Moveset
-       
-        for (int row = start.getX(); row < end.getX(); row++) {
-            for (int col = start.getY(); col < end.getY(); col++) {
-                if (board.getSpot(row, col).getPiece() == null) {
-                    if (x == 0 && endY == startY + direction && end.getPiece() == null) return true; // Move forward
-                    if (firstMove && x == 0 && endY == startY + (2*direction) && end.getPiece() == null) return true; // First move
-                }
+        for (int col = start.getY()+1; col < end.getY(); col++) {
+            if (board.getSpot(startX, col).getPiece() == null) {
+                if (x == 0 && endY == startY + direction) return true; // Move forward
+                if (firstMove && x == 0 && endY == startY + (2*direction)) return true; // First move
             }
         }
 

@@ -14,20 +14,67 @@ import java_chess.pieces.PieceColor;
  */
 public class ChessGame {
     // Attributes
-    private final Board board;
+    private Board board;
     private boolean whiteTurn = true;
+    private Spot selectedSpot;
 
     // Constructor(s)
+    /**
+     * Creates an instance of {@code ChessGame}.
+     */
     public ChessGame() {
         this.board = new Board();
     }
 
+    // Methods
+    /**
+     * Returns the {@code Board}.
+     * @return
+     */
+    public Board getBoard() {
+        return this.board;
+    }
+
+    /**
+     * Resets the game.
+     */
+    public void resetGame() {
+        this.board = new Board();
+        this.whiteTurn = true;
+    }
+
+    /**
+     * Returns the player's color.
+     * @return Piececolor
+     */
+    public PieceColor getCurrentPlayerColor() {
+        return whiteTurn ? PieceColor.WHITE : PieceColor.BLACK;
+    }
+
+    /**  
+     * Checks if a piece has been selected.
+    */
+    public boolean isPieceSelected() {
+        return selectedSpot != null;
+    }
+
+    public boolean handleSquareSelection(int row, int col) throws Exception {
+        if (selectedSpot == null) {
+            Piece selectedPiece = board.getSpot(row, col).getPiece();
+            if (selectedPiece != null &&
+            selectedPiece.getColor() == (whiteTurn ? PieceColor.WHITE : PieceColor.BLACK)) {
+                selectedSpot = new Spot(row, col, selectedPiece);
+            }
+        }
+        return false;
+    }
+
     /**
      * The {@code makeMove} function will check if the selected {@code Spot} 
-     * has an actual {@code Piece} and will handle its movement
+     * has an actual {@code Piece} and will handle its movement.
      * @param start
      * @param end
-     * @return
+     * @return boolean
      * @throws Exception 
      */
     public boolean makeMove(Spot start, Spot end) throws Exception {
@@ -63,6 +110,12 @@ public class ChessGame {
         return false;
     }
 
+    /**
+     * Checks if king is checkmate.
+     * @param kingColor
+     * @return boolean
+     * @throws Exception
+     */
     public boolean isCheckMate(PieceColor kingColor) throws Exception {
         // If king is not in check then it cannot be chackmate
         if (!isInCheck(kingColor)) return false;
@@ -77,9 +130,9 @@ public class ChessGame {
                     continue; // Skip the current position of the king
                 }
                 Spot newSpot = new Spot(kingSpot.getX() + rowOffset, kingSpot.getY() + colOffset, null);
-                // Check if movind the king to a new position is a legal move and will not result in a check
+                // Check if moving the king to a new position is a legal move and will not result in a check
                 if (isPositionOnBoard(newSpot) && 
-                king.canMove(board, new Spot(rowOffset, colOffset, king), kingSpot) &&
+                king.canMove(board, kingSpot, newSpot) &&
                 !wouldBeInCheckAfterMove(kingColor, kingSpot, newSpot)) {
                     return false; // Found a move that gets the king out of check so it's not checkmate
                 }
@@ -99,7 +152,7 @@ public class ChessGame {
             for (int col = 0; col < 8; col++) {
                 Piece piece = board.getSpot(row, col).getPiece();
                 if (piece instanceof King && piece.getColor() == color) {
-                    return new Spot(row, col, null);
+                    return board.getSpot(row, col);
                 }
             }
         }

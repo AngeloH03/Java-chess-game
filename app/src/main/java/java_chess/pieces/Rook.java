@@ -48,7 +48,7 @@ public class Rook extends Piece {
         int y = Math.abs(start.getY() - end.getY()); // Distance Y
 
         // Moveset
-        if (x != 0 && y != 0) return false;
+        if (x != 0 && y != 0) return false; // No diagonal movement
         if (x == 0) { // Vertical movement
             int direction = (endY - startY) > 0 ? 1 : -1;
             for (int i = startY + direction; i != endY; i += direction) {

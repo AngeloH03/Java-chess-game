@@ -40,9 +40,7 @@ public class King extends Piece {
   
         int x = Math.abs(start.getX() - end.getX()); 
         int y = Math.abs(start.getY() - end.getY()); 
-        if (x <= 1 && y <= 1) {
-            // check if this move will not result in the king 
-            // being attacked if so return true 
+        if (x <= 1 && y <= 1) { 
             return true; 
         }
         if (x == 2 && y == 0) return this.isValidCastling(board, start, end); // Check for castling

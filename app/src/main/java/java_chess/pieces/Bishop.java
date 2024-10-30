@@ -51,7 +51,7 @@ public class Bishop extends Piece {
         }
         if (x != y) return false; // No horizontal or vertical movement
         
-        return false;
+        return true;
     }
 
 }
