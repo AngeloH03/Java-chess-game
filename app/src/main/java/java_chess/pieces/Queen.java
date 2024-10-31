@@ -50,8 +50,6 @@ public class Queen extends Piece {
         } else if (x != 0 && y != 0) { // Diagonal movement
             int directionX = (endX - startX) > 0 ? 1 : -1;
             int directionY = (endY - startY) > 0 ? 1 : -1;
-            int currentX = startX + directionX;
-            int currentY = startY + directionY;
             for (int row = startX + directionX; row < endX; row += directionX) {
                 for (int col = startY + directionY; col < endY; col += directionY) {
                     if (row == col) {

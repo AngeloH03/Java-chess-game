@@ -2,16 +2,22 @@ package java_chess.gui;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.HeadlessException;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import java_chess.ChessGame;
 import java_chess.board.Board;
+import java_chess.board.Spot;
 import java_chess.gui.components.ChessSquareComponents;
 import java_chess.pieces.Bishop;
 import java_chess.pieces.King;
@@ -53,6 +59,7 @@ public class ChessGameGUI extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new GridLayout(8, 8));
         initializeBoard();
+        addGameResetOption();
         pack();
         setVisible(true);
     }
@@ -74,9 +81,7 @@ public class ChessGameGUI extends JFrame {
                     public void mouseClicked(MouseEvent e) {
                         try {
                             handleSquareClick(finalRow, finalCol);
-                        } catch (Exception e1) {
-                            e1.printStackTrace();
-                        }
+                        } catch (Exception e1) {}
                     }
                 });
                 add(square);
@@ -114,10 +119,15 @@ public class ChessGameGUI extends JFrame {
      * @throws Exception 
      */
     private void handleSquareClick(int row, int col) throws Exception {
+        clearHighlights();
         if (game.handleSquareSelection(row, col)) {
             refreshBoard();
             checkGameState();
+            checkGameOver();
+        } else if (game.isPieceSelected()) {
+            highlightLegalMoves(new Spot(row, col, null));
         }
+        refreshBoard();
     }
   
     /**
@@ -128,5 +138,73 @@ public class ChessGameGUI extends JFrame {
         boolean inCheck = game.isInCheck(currentPlayer);
 
         if (inCheck) JOptionPane.showMessageDialog(this, currentPlayer + " is in check!");
+    }
+
+    /**
+     * Highlights legal moves to make with a selected {@code Piece}.
+     * @param spot
+     * @throws Exception 
+     */
+    private void highlightLegalMoves(Spot spot) throws Exception {
+        List<Spot> legolMoves = game.getLegalMovesForPieceAt(spot);
+        for (Spot move : legolMoves) {
+            squares[move.getX()][move.getY()].setBackground(Color.GREEN);
+        }
+    }
+
+    /**
+     * Clears the highlighted routes of selected {@coode Piece}.
+     */
+    private void clearHighlights() {
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                squares[row][col].setBackground((row + col) % 2 == 0 ? Color.LIGHT_GRAY : new Color(205, 133, 63));
+            }
+        }
+    }
+
+    /**
+     * Sets a menu bar to reset the game at any point.
+     */
+    private void addGameResetOption() {
+        JMenuBar menuBar  = new JMenuBar();
+        JMenu gameMenu = new JMenu("Game");
+        JMenuItem resetItem = new JMenuItem("Reset");
+        resetItem.addActionListener(e -> {
+            try {
+                resetGame();
+            } catch (Exception error) {}
+        });
+        gameMenu.add(resetItem);
+        menuBar.add(gameMenu);
+        setJMenuBar(menuBar);
+    }
+
+    /**
+     * Resets the game.
+     * @throws Exception
+     */
+    private void resetGame() throws Exception {
+        game.resetGame();
+        refreshBoard();
+    }
+
+    /**
+     * Check for checkmate and display dialog window
+     * @throws Exception 
+     * @throws HeadlessException 
+     */
+    private void checkGameOver() throws HeadlessException, Exception {
+        if (game.isCheckMate(game.getCurrentPlayerColor())) {
+            int response = JOptionPane.showConfirmDialog(this, 
+            "Echec et mat ! Voulez-vous rejouer ?", 
+            "Game over", 
+            JOptionPane.YES_NO_OPTION);
+            if (response == JOptionPane.YES_OPTION) {
+                resetGame();
+            } else {
+                System.exit(0);
+            }
+        }
     }
 }
