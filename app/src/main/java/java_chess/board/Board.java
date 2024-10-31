@@ -29,10 +29,10 @@ public class Board {
      * @return {@code Spot}
      * @throws Exception
      */
-    public Spot getSpot(int x, int y) throws Exception {
-        if (x < 0 || x > 7 || y < 0 || y > 7) {
+    public Spot getSpot(int x, int y) {
+        /* if (x < 0 || x > 7 || y < 0 || y > 7) {
             throw new Exception("Index out of bound");
-        }
+        } */
         return boxes[x][y];
     }
 

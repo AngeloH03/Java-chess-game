@@ -30,13 +30,12 @@ import java_chess.pieces.Rook;
 
 /**
  * The {@code ChessGameGUI} class represents the main window that'll contain
- * all the main visible content of the chess game.
+ * all the visible content of the chess game.
  */
 public class ChessGameGUI extends JFrame {
     // Attributes
     private final ChessSquareComponents[][] squares = new ChessSquareComponents[8][8];
     private final ChessGame game = new ChessGame();
-
     private final Map<Class<? extends Piece>, String> pieceUnicodeMap = new HashMap<>()
     {
         {
@@ -54,9 +53,9 @@ public class ChessGameGUI extends JFrame {
      * Sets the main window.
      * @throws Exception
      */
-    public ChessGameGUI() throws Exception {
+    public ChessGameGUI() {
         setTitle("Shatter-Chess");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout(8, 8));
         initializeBoard();
         addGameResetOption();
@@ -70,7 +69,7 @@ public class ChessGameGUI extends JFrame {
      * to display the chess board.
      * @throws Exception
      */
-    private void initializeBoard() throws Exception {
+    private void initializeBoard() {
         for (int row = 0; row < squares.length; row++){
             for (int col = 0; col < squares[row].length; col++) {
                 final int finalRow = row;
@@ -96,7 +95,7 @@ public class ChessGameGUI extends JFrame {
      * has an instance of {@code Piece}.
      * @throws Exception
      */
-    private void refreshBoard() throws Exception {
+    private void refreshBoard() {
         Board board = new Board();
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {

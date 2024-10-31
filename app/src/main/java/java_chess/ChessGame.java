@@ -207,26 +207,13 @@ public class ChessGame {
 
         List<Spot> legalMoves = new ArrayList<>();
         switch (selectedPiece.getClass().getSimpleName()) {
-            case "Pawn":
-                addPawnMoves(spot, selectedPiece.getColor(), legalMoves);
-                break;
-            case "Rook":
-                addLineMoves(spot, new int[][]{{1, 0}, {-1,0}, {0, 1}, {0, -1}}, legalMoves);
-                break;
-            case "Knight":
-                addSingleMoves(spot, new int[][]{{2, 1}, {2, -1}, {-2, 1}, {-2, -1}, {1, 2}, {1, -2}, {-1, 2}, {-1, -2}}, legalMoves);
-                break;
-            case "Bishop":
-                addLineMoves(spot, new int[][]{{1, 1}, {-1, -1}, {1, -1}, {-1, 1}}, legalMoves);
-                break;
-            case "Queen":
-                addLineMoves(spot, new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {-1, -1}, {1, -1}, {-1, 1}}, legalMoves);
-                break;
-            case "King":
-                addSingleMoves(spot, new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {-1, -1}, {1, -1}, {-1, 1}}, legalMoves);
-                break;
-            default:
-                throw new AssertionError();
+            case "Pawn" -> addPawnMoves(spot, selectedPiece.getColor(), legalMoves);
+            case "Rook" -> addLineMoves(spot, new int[][]{{1, 0}, {-1,0}, {0, 1}, {0, -1}}, legalMoves);
+            case "Knight" -> addSingleMoves(spot, new int[][]{{2, 1}, {2, -1}, {-2, 1}, {-2, -1}, {1, 2}, {1, -2}, {-1, 2}, {-1, -2}}, legalMoves);
+            case "Bishop" -> addLineMoves(spot, new int[][]{{1, 1}, {-1, -1}, {1, -1}, {-1, 1}}, legalMoves);
+            case "Queen" -> addLineMoves(spot, new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {-1, -1}, {1, -1}, {-1, 1}}, legalMoves);
+            case "King" -> addSingleMoves(spot, new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {-1, -1}, {1, -1}, {-1, 1}}, legalMoves);
+            default -> throw new AssertionError();
         }
         return legalMoves;
     }
