@@ -33,7 +33,7 @@ public class ChessGame {
     // Methods
     /**
      * Returns the {@code Board}.
-     * @return
+     * @return Board
      */
     public Board getBoard() {
         return this.board;
@@ -63,13 +63,23 @@ public class ChessGame {
     }
 
     public boolean handleSquareSelection(int row, int col) throws Exception {
+        Piece selectedPiece = board.getSpot(row, col).getPiece();
         if (selectedSpot == null) {
-            Piece selectedPiece = board.getSpot(row, col).getPiece();
+            // Select a piece
+            System.out.println("Selecting piece");
             if (selectedPiece != null &&
             selectedPiece.getColor() == (whiteTurn ? PieceColor.WHITE : PieceColor.BLACK)) {
-                selectedSpot = new Spot(row, col, selectedPiece);
+                selectedSpot = board.getSpot(row, col);
+                return false;
             }
+        } else {
+            // Move selected piece
+            System.out.println("Attempting move...");
+            boolean moveMade = makeMove(selectedSpot, board.getSpot(row, col));
+            selectedSpot = null;
+            return moveMade;
         }
+        System.out.println("No piece selected");
         return false;
     }
 
@@ -87,11 +97,15 @@ public class ChessGame {
         // No piece at start position or not the player's turn
         if (currentPiece == null || currentPiece.getColor() !=  (whiteTurn ? PieceColor.WHITE : PieceColor.BLACK)) return false;
 
+        System.out.println(currentPiece.getClass().getSimpleName());
+
         if (currentPiece.canMove(board, start, end)) {
+            System.out.println("can move");
             end.setPiece(currentPiece);
             start.setPiece(null);
             return true;
         }
+        System.out.println("can't move");
         return false;
     }
 
@@ -207,13 +221,26 @@ public class ChessGame {
 
         List<Spot> legalMoves = new ArrayList<>();
         switch (selectedPiece.getClass().getSimpleName()) {
-            case "Pawn" -> addPawnMoves(spot, selectedPiece.getColor(), legalMoves);
-            case "Rook" -> addLineMoves(spot, new int[][]{{1, 0}, {-1,0}, {0, 1}, {0, -1}}, legalMoves);
-            case "Knight" -> addSingleMoves(spot, new int[][]{{2, 1}, {2, -1}, {-2, 1}, {-2, -1}, {1, 2}, {1, -2}, {-1, 2}, {-1, -2}}, legalMoves);
-            case "Bishop" -> addLineMoves(spot, new int[][]{{1, 1}, {-1, -1}, {1, -1}, {-1, 1}}, legalMoves);
-            case "Queen" -> addLineMoves(spot, new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {-1, -1}, {1, -1}, {-1, 1}}, legalMoves);
-            case "King" -> addSingleMoves(spot, new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {-1, -1}, {1, -1}, {-1, 1}}, legalMoves);
-            default -> throw new AssertionError();
+            case "Pawn": 
+                addPawnMoves(spot, selectedPiece.getColor(), legalMoves);
+                break;
+            case "Rook": 
+                addLineMoves(spot, new int[][]{{1, 0}, {-1,0}, {0, 1}, {0, -1}}, legalMoves);
+                break;
+            case "Knight": 
+                addSingleMoves(spot, new int[][]{{2, 1}, {2, -1}, {-2, 1}, {-2, -1}, {1, 2}, {1, -2}, {-1, 2}, {-1, -2}}, legalMoves);
+                break;
+            case "Bishop": 
+                addLineMoves(spot, new int[][]{{1, 1}, {-1, -1}, {1, -1}, {-1, 1}}, legalMoves);
+                break;
+            case "Queen": 
+                addLineMoves(spot, new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {-1, -1}, {1, -1}, {-1, 1}}, legalMoves);
+                break;
+            case "King": 
+                addSingleMoves(spot, new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {-1, -1}, {1, -1}, {-1, 1}}, legalMoves);
+                break;
+            default: 
+                throw new AssertionError();
         }
         return legalMoves;
     }

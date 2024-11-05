@@ -26,7 +26,7 @@ public class Pawn extends Piece {
     @Override
     public boolean canMove(Board board, Spot start, Spot end) throws Exception {
         // Cannot move a Piece on a spot that has the same color as the current one
-        if (end.getPiece().getColor() == this.getColor()) return false;
+        if (end.getPiece() != null && end.getPiece().getColor() == this.getColor()) return false;
 
         // Start
         int startX = start.getX();
@@ -43,12 +43,8 @@ public class Pawn extends Piece {
         int direction = this.getColor() == PieceColor.WHITE ? -1 : 1;
 
         // Moveset
-        for (int col = start.getY()+1; col < end.getY(); col++) {
-            if (board.getSpot(startX, col).getPiece() == null) {
-                if (x == 0 && endY == startY + direction) return true; // Move forward
-                if (firstMove && x == 0 && endY == startY + (2*direction)) return true; // First move
-            }
-        }
+        if (x == 0 && endY == startY + direction) return true; // Move forward
+        if (firstMove && x == 0 && endY == startY + (2*direction)) return true; // First move
 
         // Diagonal capture
         if (end.getPiece() != null && end.getPiece().getColor() != this.getColor() && x == 1 && y == 1) return true;
@@ -59,6 +55,6 @@ public class Pawn extends Piece {
         if (enPassant && end.getPiece() == null && board.getSpot(startX+1, startY).getPiece() instanceof Pawn && x == 1 && y == 1) return true;
 
         return false;
-    };
+    }
     
 }

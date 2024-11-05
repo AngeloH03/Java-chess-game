@@ -14,6 +14,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 
 import java_chess.ChessGame;
 import java_chess.board.Board;
@@ -72,6 +73,9 @@ public class ChessGameGUI extends JFrame {
     private void initializeBoard() {
         for (int row = 0; row < squares.length; row++){
             for (int col = 0; col < squares[row].length; col++) {
+                // Debug
+                JTextArea text = new JTextArea("x : " + row + " y : " + col);
+                text.setBackground(new Color(0, true));
                 final int finalRow = row;
                 final int finalCol = col;
                 ChessSquareComponents square = new ChessSquareComponents(row, col);
@@ -84,6 +88,7 @@ public class ChessGameGUI extends JFrame {
                     }
                 });
                 add(square);
+                square.add(text);
                 squares[row][col] = square;
             }
         }
@@ -96,7 +101,7 @@ public class ChessGameGUI extends JFrame {
      * @throws Exception
      */
     private void refreshBoard() {
-        Board board = new Board();
+        Board board = game.getBoard();
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
                 Piece piece = board.getSpot(row, col).getPiece();
@@ -118,8 +123,9 @@ public class ChessGameGUI extends JFrame {
      * @throws Exception 
      */
     private void handleSquareClick(int row, int col) throws Exception {
+        boolean moveResult = game.handleSquareSelection(row, col);
         clearHighlights();
-        if (game.handleSquareSelection(row, col)) {
+        if (moveResult) {
             refreshBoard();
             checkGameState();
             checkGameOver();
@@ -145,8 +151,8 @@ public class ChessGameGUI extends JFrame {
      * @throws Exception 
      */
     private void highlightLegalMoves(Spot spot) throws Exception {
-        List<Spot> legolMoves = game.getLegalMovesForPieceAt(spot);
-        for (Spot move : legolMoves) {
+        List<Spot> legalMoves = game.getLegalMovesForPieceAt(spot);
+        for (Spot move : legalMoves) {
             squares[move.getX()][move.getY()].setBackground(Color.GREEN);
         }
     }

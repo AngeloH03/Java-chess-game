@@ -8,10 +8,11 @@ import java_chess.board.Spot;
 import java_chess.pieces.Bishop;
 import java_chess.pieces.Knight;
 import java_chess.pieces.Pawn;
+import java_chess.pieces.Piece;
 import java_chess.pieces.PieceColor;
 import java_chess.pieces.Rook;
 
-public class ChessBoard {
+public class ChessTest {
     
     @Test void piecesTest() {
         // Pawn
@@ -38,6 +39,17 @@ public class ChessBoard {
         Assertions.assertEquals(PieceColor.WHITE, spot.getPiece().getColor());
         Assertions.assertEquals(0, spot.getX());
         Assertions.assertEquals(0, spot.getY());
+    }
+
+    @Test void canMoveTest() throws Exception {
+        Board board = new Board();
+        Piece pawn = new Pawn(PieceColor.WHITE);
+        Assertions.assertEquals("Pawn", pawn.getClass().getSimpleName());
+
+        Spot start = new Spot(0, 0, pawn);
+        Spot end = new Spot(0, 1, null);
+
+        Assertions.assertEquals(true, pawn.canMove(board, start, end));
     }
 
     @Test void boardTest() {

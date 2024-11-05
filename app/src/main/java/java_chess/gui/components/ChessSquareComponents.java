@@ -39,7 +39,7 @@ public class ChessSquareComponents extends JButton{
         setVerticalAlignment(CENTER);
 
         // Font settings
-        setFont(new Font("Serif", Font.BOLD, 36));
+        setFont(new Font("Serif", Font.BOLD, 24));
     }
 
     /**
