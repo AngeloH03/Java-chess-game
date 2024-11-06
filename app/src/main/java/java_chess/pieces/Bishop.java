@@ -22,7 +22,7 @@ public class Bishop extends Piece {
     @Override
     public boolean canMove(Board board, Spot start, Spot end) throws Exception {
         // Cannot move a Piece on a spot that has the same color as the current one
-        if (end.getPiece().getColor() == this.getColor()) return false;
+        if (end.getPiece() != null && end.getPiece().getColor() == this.getColor()) return false;
         
         // Start
         int startX = start.getX();
@@ -45,8 +45,8 @@ public class Bishop extends Piece {
 
             while (currentX != endX && currentY != endY) {
                 if (board.getSpot(currentX, currentY).getPiece() != null) return false;
-                currentX++;
-                currentY++;
+                currentX += directionX;
+                currentY += directionY;
             }
         }
         if (x != y) return false; // No horizontal or vertical movement

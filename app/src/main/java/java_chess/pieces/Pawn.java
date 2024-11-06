@@ -28,6 +28,8 @@ public class Pawn extends Piece {
         // Cannot move a Piece on a spot that has the same color as the current one
         if (end.getPiece() != null && end.getPiece().getColor() == this.getColor()) return false;
 
+        boolean isAtStartSpot = (start.getY() == 6 && start.getPiece().getColor() == PieceColor.WHITE); 
+
         // Start
         int startX = start.getX();
         int startY = start.getY();
@@ -43,8 +45,10 @@ public class Pawn extends Piece {
         int direction = this.getColor() == PieceColor.WHITE ? -1 : 1;
 
         // Moveset
-        if (x == 0 && endY == startY + direction) return true; // Move forward
-        if (firstMove && x == 0 && endY == startY + (2*direction)) return true; // First move
+        if (x == 0 && endY == startY + direction) {
+            return true; // Move forward
+        }
+        if (isAtStartSpot && x == 0 && endY == startY + (2*direction)) return true; // First move
 
         // Diagonal capture
         if (end.getPiece() != null && end.getPiece().getColor() != this.getColor() && x == 1 && y == 1) return true;

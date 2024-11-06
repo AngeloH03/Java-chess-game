@@ -22,7 +22,7 @@ public class Knight extends Piece {
     @Override
     public boolean canMove(Board board, Spot start, Spot end) {
         // Cannot move a Piece on a spot that has the same color as the current one
-        if (end.getPiece().getColor() == this.getColor()) return false;
+        if (end.getPiece() != null && end.getPiece().getColor() == this.getColor()) return false;
 
         // Start
         int startX = start.getX();
@@ -37,7 +37,7 @@ public class Knight extends Piece {
         int y = Math.abs(endY - startY);
         
         // Moveset
-        return x == 2 && y == 1 || y == 2 && x == 1; // L moveset
+        return x == 2 && y == 1 || x == 1 && y == 2; // L moveset
     }
     
 }

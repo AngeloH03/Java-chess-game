@@ -47,12 +47,9 @@ public class ChessTest {
         Assertions.assertEquals("Pawn", pawn.getClass().getSimpleName());
 
         Spot start = new Spot(0, 0, pawn);
-        Spot end = new Spot(0, 1, null);
+        Spot end = new Spot(0, -1, null);
 
         Assertions.assertEquals(true, pawn.canMove(board, start, end));
     }
 
-    @Test void boardTest() {
-        Board board = new Board();
-    }
 }

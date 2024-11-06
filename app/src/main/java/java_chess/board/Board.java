@@ -1,11 +1,6 @@
 package java_chess.board;
 
-import java_chess.pieces.Bishop;
-import java_chess.pieces.King;
-import java_chess.pieces.Knight;
-import java_chess.pieces.Pawn;
 import java_chess.pieces.PieceColor;
-import java_chess.pieces.Queen;
 import java_chess.pieces.Rook;
 
 /**
@@ -17,6 +12,9 @@ public class Board {
     private Spot[][] boxes = {};
 
     // Constructor(s)
+    /**
+     * Creates a {@code Board}.
+     */
     public Board() {
         boxes = new Spot[8][8];
         this.resetBoard();
@@ -43,7 +41,17 @@ public class Board {
      * Sets the board back to its initial state
      */
     private void resetBoard() {
-        // Black Pieces
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                if (row == 4 && col == 4) {
+                    boxes[row][col] = new Spot(row, col, new Rook(PieceColor.WHITE));
+                } else {
+                    boxes[row][col] = new Spot(row, col, null);
+                }
+            }
+        }
+
+        /* // Black Pieces
         boxes[0][0] = new Spot(0,0, new Rook(PieceColor.BLACK));
         boxes[1][0] = new Spot(1,0, new Knight(PieceColor.BLACK));
         boxes[2][0] = new Spot(2,0, new Bishop(PieceColor.BLACK));
@@ -75,6 +83,6 @@ public class Board {
             for (int x = 0; x < 8; x++) {
                 boxes[x][y] = new Spot(x, y, null);
             }
-        }
+        } */
     }
 }

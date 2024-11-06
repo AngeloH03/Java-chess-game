@@ -22,7 +22,7 @@ public class Queen extends Piece {
     @Override
     public boolean canMove(Board board, Spot start, Spot end) throws Exception {
         // Cannot move a Piece on a spot that has the same color as the current one
-        if (end.getPiece().getColor() == this.getColor()) return false;
+        if (end.getPiece() != null && end.getPiece().getColor() == this.getColor()) return false;
 
         // Start
         int startX = start.getX();
