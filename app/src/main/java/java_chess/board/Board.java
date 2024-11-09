@@ -1,7 +1,7 @@
 package java_chess.board;
 
 import java_chess.pieces.PieceColor;
-import java_chess.pieces.Rook;
+import java_chess.pieces.Queen;
 
 /**
  * The {@code Board} class creates an array of 8*8 squares where
@@ -44,7 +44,7 @@ public class Board {
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
                 if (row == 4 && col == 4) {
-                    boxes[row][col] = new Spot(row, col, new Rook(PieceColor.WHITE));
+                    boxes[row][col] = new Spot(row, col, new Queen(PieceColor.WHITE));
                 } else {
                     boxes[row][col] = new Spot(row, col, null);
                 }

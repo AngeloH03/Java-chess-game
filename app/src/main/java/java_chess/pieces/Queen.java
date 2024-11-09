@@ -44,18 +44,19 @@ public class Queen extends Piece {
             }
         } else if (y == 0) { // Horizontal movement
             int direction = (endX - startX) > 0 ? 1 : -1;
-            for (int i = startX + direction; i != endY; i += direction) {
+            for (int i = startX + direction; i != endX; i += direction) {
                 if (board.getSpot(i, startY).getPiece() != null) return false;
             }
         } else if (x != 0 && y != 0) { // Diagonal movement
             int directionX = (endX - startX) > 0 ? 1 : -1;
             int directionY = (endY - startY) > 0 ? 1 : -1;
-            for (int row = startX + directionX; row < endX; row += directionX) {
-                for (int col = startY + directionY; col < endY; col += directionY) {
-                    if (row == col) {
-                        if (board.getSpot(row, col).getPiece() != null) return false;
-                    }
-                }
+            int currentX = startX + directionX;
+            int currentY = startY + directionY;
+
+            while (currentX != endX && currentY != endY) {
+                if (board.getSpot(currentX, currentY).getPiece() != null) return false;
+                currentX += directionX;
+                currentY += directionY;
             }
         }
 

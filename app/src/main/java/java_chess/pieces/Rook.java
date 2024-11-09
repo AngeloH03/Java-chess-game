@@ -56,7 +56,7 @@ public class Rook extends Piece {
             }
         } else { // Horizontal movement
             int direction = (endX - startX) > 0 ? 1 : -1;
-            for (int i = startX + direction; i != endY; i += direction) {
+            for (int i = startX + direction; i != endX; i += direction) {
                 if (board.getSpot(i, startY).getPiece() != null) return false;
             }
         }
