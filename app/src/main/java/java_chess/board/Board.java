@@ -1,7 +1,9 @@
 package java_chess.board;
 
+import java_chess.pieces.Knight;
+import java_chess.pieces.Pawn;
 import java_chess.pieces.PieceColor;
-import java_chess.pieces.Queen;
+import java_chess.pieces.Rook;
 
 /**
  * The {@code Board} class creates an array of 8*8 squares where
@@ -43,8 +45,14 @@ public class Board {
     private void resetBoard() {
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
-                if (row == 4 && col == 4) {
-                    boxes[row][col] = new Spot(row, col, new Queen(PieceColor.WHITE));
+                if (row == 6 && col == 4) {
+                    boxes[row][col] = new Spot(row, col, new Knight(PieceColor.WHITE));
+                } else if (row == 2 && col == 5) {
+                    boxes[row][col] = new Spot(row, col, new Pawn(PieceColor.BLACK));
+                } else if (row == 2 && col == 4) {
+                    boxes[row][col] = new Spot(row, col, new Pawn(PieceColor.BLACK));
+                } else if (row == 2 && col == 3) {
+                    boxes[row][col] = new Spot(row, col, new Pawn(PieceColor.BLACK));
                 } else {
                     boxes[row][col] = new Spot(row, col, null);
                 }

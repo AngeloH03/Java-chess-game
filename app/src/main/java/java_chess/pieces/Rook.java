@@ -60,7 +60,8 @@ public class Rook extends Piece {
                 if (board.getSpot(i, startY).getPiece() != null) return false;
             }
         }
-        if (x == 2 && y == 0) return this.isValidCastling(board, start, end); // Check for castling
+        
+        /* if (x == 0 && y == 0) return this.isValidCastling(board, start, end); // Check for castling */
         
         return true;
     }

@@ -36,33 +36,31 @@ public class Queen extends Piece {
         int x = Math.abs(end.getX() - start.getX());
         int y = Math.abs(end.getY() - start.getY());
 
+        // Directions
+        int directionX = (endX - startX) > 0 ? 1 : -1;
+        int directionY = (endY - startY) > 0 ? 1 : -1;
+
         // Moveset
         if (x == 0) { // Vertical movement
-            int direction = (endY - startY) > 0 ? 1 : -1;
-            for (int i = startY + direction; i != endY; i += direction) {
-                if (board.getSpot(startX, i).getPiece() != null) return false;
+            for (int col = startY + directionY; col != endY; col += directionY) {
+                if (board.getSpot(startX, col).getPiece() != null) return false;
             }
         } else if (y == 0) { // Horizontal movement
-            int direction = (endX - startX) > 0 ? 1 : -1;
-            for (int i = startX + direction; i != endX; i += direction) {
-                if (board.getSpot(i, startY).getPiece() != null) return false;
+            for (int row = startX + directionX; row != endX; row += directionX) {
+                if (board.getSpot(row, startY).getPiece() != null) return false;
             }
         } else if (x != 0 && y != 0) { // Diagonal movement
-            int directionX = (endX - startX) > 0 ? 1 : -1;
-            int directionY = (endY - startY) > 0 ? 1 : -1;
             int currentX = startX + directionX;
             int currentY = startY + directionY;
 
+            if (x != y) return false;
             while (currentX != endX && currentY != endY) {
                 if (board.getSpot(currentX, currentY).getPiece() != null) return false;
                 currentX += directionX;
                 currentY += directionY;
             }
         }
-
-        if (x > 1 && y == 1) return false;
-        if (x == 1 && y > 1) return false;
-
+        
         return true;
     }
 

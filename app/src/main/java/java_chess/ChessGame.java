@@ -6,7 +6,6 @@ import java.util.List;
 import java_chess.board.Board;
 import java_chess.board.Spot;
 import java_chess.pieces.King;
-import java_chess.pieces.Pawn;
 import java_chess.pieces.Piece;
 import java_chess.pieces.PieceColor;
 
@@ -221,26 +220,13 @@ public class ChessGame {
 
         List<Spot> legalMoves = new ArrayList<>();
         switch (selectedPiece.getClass().getSimpleName()) {
-            case "Pawn": 
-                addPawnMoves(spot, selectedPiece.getColor(), legalMoves);
-                break;
-            case "Rook": 
-                addLineMoves(spot, new int[][]{{1, 0}, {-1,0}, {0, 1}, {0, -1}}, legalMoves);
-                break;
-            case "Knight": 
-                addSingleMoves(spot, new int[][]{{2, 1}, {2, -1}, {-2, 1}, {-2, -1}, {1, 2}, {1, -2}, {-1, 2}, {-1, -2}}, legalMoves);
-                break;
-            case "Bishop": 
-                addLineMoves(spot, new int[][]{{1, 1}, {-1, -1}, {1, -1}, {-1, 1}}, legalMoves);
-                break;
-            case "Queen": 
-                addLineMoves(spot, new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {-1, -1}, {1, -1}, {-1, 1}}, legalMoves);
-                break;
-            case "King": 
-                addSingleMoves(spot, new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {-1, -1}, {1, -1}, {-1, 1}}, legalMoves);
-                break;
-            default: 
-                throw new AssertionError();
+            case "Pawn" -> addPawnMoves(spot, selectedPiece.getColor(), legalMoves);
+            case "Rook" -> addLineMoves(spot, new int[][]{{1, 0}, {-1,0}, {0, 1}, {0, -1}}, legalMoves);
+            case "Knight" -> addSingleMoves(spot, new int[][]{{2, 1}, {2, -1}, {-2, 1}, {-2, -1}, {1, 2}, {1, -2}, {-1, 2}, {-1, -2}}, legalMoves);
+            case "Bishop" -> addLineMoves(spot, new int[][]{{1, 1}, {-1, -1}, {1, -1}, {-1, 1}}, legalMoves);
+            case "Queen" -> addLineMoves(spot, new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {-1, -1}, {1, -1}, {-1, 1}}, legalMoves);
+            case "King" -> addSingleMoves(spot, new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {-1, -1}, {1, -1}, {-1, 1}}, legalMoves);
+            default -> throw new AssertionError();
         }
         return legalMoves;
     }
@@ -255,12 +241,12 @@ public class ChessGame {
     private void addPawnMoves(Spot spot, PieceColor color, List<Spot> legalMoves) throws Exception {
         int direction = color == PieceColor.WHITE ? -1 : 1;
         // Standard single move
-        Spot newSpot = new Spot(spot.getX(), spot.getY() + direction, new Pawn(color));
+        Spot newSpot = new Spot(spot.getX() + direction, spot.getY(), null);
         if (isPositionOnBoard(newSpot) && board.getSpot(newSpot.getX(), newSpot.getY()).getPiece() == null) legalMoves.add(newSpot);
         // Double move from starting position
-        if (color == PieceColor.WHITE && spot.getY() == 6 || color == PieceColor.BLACK && spot.getY() == 1) {
-            newSpot = new Spot(spot.getX(), spot.getY() + (2*direction), new Pawn(color));
-            Spot intermidiateSpot = new Spot(newSpot.getX(), newSpot.getY() + direction, new Pawn(color));
+        if (color == PieceColor.WHITE && spot.getX() == 6 || color == PieceColor.BLACK && spot.getX() == 1) {
+            newSpot = new Spot(spot.getX() + (2*direction), spot.getY(), null);
+            Spot intermidiateSpot = new Spot(newSpot.getX() + direction, newSpot.getY(), null);
             if (isPositionOnBoard(newSpot) && board.getSpot(newSpot.getX(), newSpot.getY()).getPiece() == null && 
             board.getSpot(intermidiateSpot.getX(), intermidiateSpot.getY()).getPiece() == null) {
                 legalMoves.add(newSpot);
@@ -268,9 +254,9 @@ public class ChessGame {
         }
 
         // Captures
-        int[] captureCols = {spot.getX() -1, spot.getX() +1};
+        int[] captureCols = {spot.getY() -1, spot.getY() +1};
         for (int col : captureCols) {
-            newSpot = new Spot(col, spot.getY() + direction, new Pawn(color));
+            newSpot = new Spot(spot.getX() + direction, col, null);
             if (isPositionOnBoard(newSpot) && board.getSpot(newSpot.getX(), newSpot.getY()).getPiece() != null && 
             board.getSpot(newSpot.getX(), newSpot.getY()).getPiece().getColor() != color) {
                 legalMoves.add(newSpot);
@@ -304,7 +290,7 @@ public class ChessGame {
      */
     private void addLineMoves(Spot spot, int[][] directions, List<Spot> legalMoves) throws Exception {
         for (int[] d : directions) {
-            Spot newSpot = new Spot(spot.getX() + d[0], spot.getX() + d[1], null);
+            Spot newSpot = new Spot(spot.getX() + d[0], spot.getY() + d[1], null);
             while (isPositionOnBoard(newSpot)) {
                 if (board.getSpot(newSpot.getX(), newSpot.getY()) == null) {
                     legalMoves.add(new Spot(newSpot.getX(), newSpot.getY(), null));
