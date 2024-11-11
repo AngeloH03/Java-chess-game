@@ -9,16 +9,16 @@ import java_chess.board.Spot;
  */
 public abstract class Piece {
     // Attributes
-    boolean white;
-    boolean killed;
+    private PieceColor color;
+    private boolean killed = false;
 
     // Constructor(s)
     /**
      * Create a new instance of {@code Piece}.
-     * @param white
+     * @param color
      */
-    public Piece(boolean white) {
-        this.white = white;
+    public Piece(PieceColor color) {
+        this.color = color;
     }
 
     // Getters
@@ -26,8 +26,8 @@ public abstract class Piece {
      * Checks wether the {@code Piece} is white or not.
      * @return boolean
      */
-    public boolean isWhite() {
-        return white;
+    public PieceColor getColor() {
+        return color;
     }
 
     /**
@@ -40,16 +40,16 @@ public abstract class Piece {
 
     // Setters
     /**
-     * Sets the {@code isWhite} attribute of a {@code Piece}.
-     * @param isWhite
+     * Sets the {@code color} attribute of a {@code Piece}.
+     * @param PieceColor
      */
-    public void setWhite(boolean white) {
-        this.white = white;
+    public void setColor(PieceColor color) {
+        this.color = color;
     }
 
     /**
-     * Sets the {@code isKilled} attribute of a {@code Piece}.
-     * @param isWhite
+     * Sets the {@code killed} attribute of a {@code Piece}.
+     * @param killed
      */
     public void setIsKilled(boolean killed) {
         this.killed = killed;
@@ -60,7 +60,7 @@ public abstract class Piece {
      * @param board
      * @param start
      * @param end
-     * @return
+     * @return boolean
      */
-    public abstract boolean canMove(Board board, Spot start, Spot end);
+    public abstract boolean canMove(Board board, Spot start, Spot end) throws Exception;
 }

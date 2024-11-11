@@ -3,16 +3,26 @@ package java_chess.pieces;
 import java_chess.board.Board;
 import java_chess.board.Spot;
 
+/**
+ * The {@code Knight} class represents a Knight piece
+ * from a chess game.
+ * 
+ * Inherits from {@code Piece}.
+ */
 public class Knight extends Piece {
 
-    public Knight(boolean white) {
-        super(white);
+    /**
+     * Creates a new instance of {@code Knight}.
+     * @param color
+     */
+    public Knight(PieceColor color) {
+        super(color);
     }
 
     @Override
     public boolean canMove(Board board, Spot start, Spot end) {
         // Cannot move a Piece on a spot that has the same color as the current one
-        if (end.getPiece().isWhite() == this.isWhite()) return false;
+        if (end.getPiece() != null && end.getPiece().getColor() == this.getColor()) return false;
 
         // Start
         int startX = start.getX();
@@ -27,7 +37,7 @@ public class Knight extends Piece {
         int y = Math.abs(endY - startY);
         
         // Moveset
-        return endX == startX + 2 && y == 1 || endY == startY +2 && x == 1;
+        return x == 2 && y == 1 || x == 1 && y == 2; // L moveset
     }
     
 }

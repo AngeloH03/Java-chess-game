@@ -3,28 +3,65 @@ package java_chess.pieces;
 import java_chess.board.Board;
 import java_chess.board.Spot;
 
+/**
+ * The {@code Queen} class represents a Queen piece
+ * from a chess game.
+ * 
+ * Inherits from {@code Piece}.
+ */
 public class Queen extends Piece {
 
-    public Queen(boolean white) {
-        super(white);
+    /**
+     * Creates a new instance of {@code Queen}.
+     * @param color
+     */
+    public Queen(PieceColor color) {
+        super(color);
     }
 
     @Override
-    public boolean canMove(Board board, Spot start, Spot end) {
+    public boolean canMove(Board board, Spot start, Spot end) throws Exception {
         // Cannot move a Piece on a spot that has the same color as the current one
-        if (end.getPiece().isWhite() == this.isWhite()) return false;
+        if (end.getPiece() != null && end.getPiece().getColor() == this.getColor()) return false;
+
+        // Start
+        int startX = start.getX();
+        int startY = start.getY();
+
+        // End
+        int endX = end.getX();
+        int endY = end.getY();
 
         // Distances
         int x = Math.abs(end.getX() - start.getX());
         int y = Math.abs(end.getY() - start.getY());
 
-        // Moveset
-        if (x >= 1 && y == 0) return true; // Horizontal movement
-        if (x == 0 && y >= 1) return true; // Vertical movement
-        if (x >= 1 && y == 1) return false;
-        if (x == 1 && y >= 1) return false;
+        // Directions
+        int directionX = (endX - startX) > 0 ? 1 : -1;
+        int directionY = (endY - startY) > 0 ? 1 : -1;
 
-        return false;
+        // Moveset
+        if (x == 0) { // Vertical movement
+            for (int col = startY + directionY; col != endY; col += directionY) {
+                if (board.getSpot(startX, col).getPiece() != null) return false;
+            }
+        } else if (y == 0) { // Horizontal movement
+            for (int row = startX + directionX; row != endX; row += directionX) {
+                if (board.getSpot(row, startY).getPiece() != null) return false;
+            }
+        } else if (x != 0 && y != 0) { // Diagonal movement
+            int currentX = startX + directionX;
+            int currentY = startY + directionY;
+
+            if (x != y) return false;
+            while (currentX != endX && currentY != endY) {
+                if (board.getSpot(currentX, currentY).getPiece() != null) return false;
+                currentX += directionX;
+                currentY += directionY;
+            }
+        }
+        
+        return true;
     }
 
 }

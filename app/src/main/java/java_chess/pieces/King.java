@@ -17,10 +17,10 @@ public class King extends Piece {
     // Constructor(s)
     /**
      * Creates a new instance of {@code King}.
-     * @param white
+     * @param color
      */
-    public King(boolean white) { 
-        super(white); 
+    public King(PieceColor color) { 
+        super(color);
     }
   
     // Getters
@@ -36,13 +36,11 @@ public class King extends Piece {
     @Override
     public boolean canMove(Board board, Spot start, Spot end) { 
         // Cannot move a Piece on a spot that has the same color as the current one
-        if (end.getPiece().isWhite() == this.isWhite()) return false;
+        if (end.getPiece() != null && end.getPiece().getColor() == this.getColor()) return false;
   
         int x = Math.abs(start.getX() - end.getX()); 
         int y = Math.abs(start.getY() - end.getY()); 
-        if (x <= 1 && y <= 1) {
-            // check if this move will not result in the king 
-            // being attacked if so return true 
+        if (x <= 1 && y <= 1) { 
             return true; 
         }
         if (x == 2 && y == 0) return this.isValidCastling(board, start, end); // Check for castling

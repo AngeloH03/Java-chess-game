@@ -17,16 +17,19 @@ public class Pawn extends Piece {
     // Constructor(s)
     /**
      * Creates a new instance of {@code Pawn}.
-     * @param white
+     * @param color
      */
-    public Pawn(boolean white) {
-        super(white);
+    public Pawn(PieceColor color) {
+        super(color);
     }
 
     @Override
-    public boolean canMove(Board board, Spot start, Spot end) {
+    public boolean canMove(Board board, Spot start, Spot end) throws Exception {
         // Cannot move a Piece on a spot that has the same color as the current one
-        if (end.getPiece().isWhite() == this.isWhite()) return false;
+        if (end.getPiece() != null && end.getPiece().getColor() == this.getColor()) return false;
+
+        boolean isAtStartSpot = (start.getX() == 6 && start.getPiece().getColor() == PieceColor.WHITE || 
+        start.getX() == 1 && start.getPiece().getColor() == PieceColor.BLACK); 
 
         // Start
         int startX = start.getX();
@@ -36,17 +39,27 @@ public class Pawn extends Piece {
         int endX = end.getX();
         int endY = end.getY();
 
-        int direction = this.isWhite() ? -1 : 1;
+        // Distances
+        int x = Math.abs(endX - startX);
+        int y = Math.abs(endY - startY);
+
+        int direction = this.getColor() == PieceColor.WHITE ? -1 : 1;
 
         // Moveset
-        // Move forward
-        if (startX == endX && endY == startY + direction && end.getPiece() == null) return true;
+        if (end.getPiece() == null && endX == startX + direction && y == 0) {
+            return true; // Move forward
+        }
+        if (isAtStartSpot && endX == startX + (2*direction) && y == 0) return true; // First move
 
-        // First move
-        if (firstMove && startX == endX && endY == startY + (2*direction) && end.getPiece() == null) return true;
-        
+        // Diagonal capture
+        if (end.getPiece() != null && end.getPiece().getColor() != this.getColor() && endX == startX + direction && y == 1) {
+            if (start.getPiece().getColor() == PieceColor.WHITE && direction == -1) return true;
+            if (start.getPiece().getColor() == PieceColor.BLACK && direction == 1) return true;
+        }
+
         // En passant
-        return enPassant && Math.abs(endX - startX) == 1 && endY == startY + direction && end.getPiece() == null;
-    };
+        if (start.getX() == 5 && direction == 1 || start.getX() == 4 && direction == -1) enPassant = true;
+        return enPassant && end.getPiece() == null && board.getSpot(startX+1, startY).getPiece() instanceof Pawn && x == 1 && y == 1;
+    }
     
 }
