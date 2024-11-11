@@ -158,7 +158,7 @@ public class ChessGameGUI extends JFrame {
     private void clearHighlights() {
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
-                squares[row][col].setBackground((row + col) % 2 == 0 ? Color.LIGHT_GRAY : new Color(205, 133, 63));
+                squares[row][col].setBackground((row + col) % 2 == 0 ? new Color(235, 236, 208) : new Color(115, 149, 82));
             }
         }
     }
@@ -172,6 +172,7 @@ public class ChessGameGUI extends JFrame {
         JMenuItem resetItem = new JMenuItem("Reset");
         resetItem.addActionListener(e -> {
             try {
+                clearHighlights();
                 resetGame();
             } catch (Exception error) {}
         });

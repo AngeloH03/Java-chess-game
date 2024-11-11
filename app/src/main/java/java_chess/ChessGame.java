@@ -61,6 +61,13 @@ public class ChessGame {
         return selectedSpot != null;
     }
 
+    /**
+     * Handle square clicks
+     * @param row
+     * @param col
+     * @return boolean
+     * @throws Exception
+     */
     public boolean handleSquareSelection(int row, int col) throws Exception {
         Piece selectedPiece = board.getSpot(row, col).getPiece();
         if (selectedSpot == null) {
@@ -102,6 +109,7 @@ public class ChessGame {
             System.out.println("can move");
             end.setPiece(currentPiece);
             start.setPiece(null);
+            whiteTurn = !whiteTurn;
             return true;
         }
         System.out.println("can't move");
@@ -117,10 +125,10 @@ public class ChessGame {
     public boolean isInCheck(PieceColor kingColor) throws Exception {
         Spot kingSpot = findKingSpot(kingColor); // Find the king
         for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; row++) {
+            for (int col = 0; col < 8; col++) {
                 Piece piece = board.getSpot(row, col).getPiece();
                 if (piece != null && piece.getColor() != kingColor) {
-                    if (piece.canMove(board, new Spot(row, col, null), kingSpot)) return true; // An opponent piece can capture the king.
+                    if (piece.canMove(board, new Spot(row, col, piece), kingSpot)) return true; // An opponent piece can capture the king.
                 }
             }
         }
@@ -173,15 +181,17 @@ public class ChessGame {
                 }
             }
         }
-        throw new RuntimeException("King not found, which should never happen.");
+        throw new RuntimeException("Aucun roi trouvé, ce qui n'est pas censé ce produire.");
     }
     
     /**
-     * Checks if a {@code Piece} is not out of bounds.
+     * Checks if a {@code Piece} is in boundaries.
      */
-    private boolean isPositionOnBoard(Spot spot) throws Exception {
-        return board.getSpot(spot.getX(), spot.getY()).getX() >= 0 && board.getSpot(spot.getX(), spot.getY()).getX() < 8 &&
-        board.getSpot(spot.getX(), spot.getY()).getY() >= 0 && board.getSpot(spot.getX(), spot.getY()).getY() < 8;
+    private boolean isPositionOnBoard(Spot spot) {
+        int x = spot.getX();
+        int y = spot.getY();
+
+        return x >= 0 && x < 8 && y >= 0 && y < 8;
     }
 
     /**
@@ -221,8 +231,8 @@ public class ChessGame {
         List<Spot> legalMoves = new ArrayList<>();
         switch (selectedPiece.getClass().getSimpleName()) {
             case "Pawn" -> addPawnMoves(spot, selectedPiece.getColor(), legalMoves);
-            case "Rook" -> addLineMoves(spot, new int[][]{{1, 0}, {-1,0}, {0, 1}, {0, -1}}, legalMoves);
-            case "Knight" -> addSingleMoves(spot, new int[][]{{2, 1}, {2, -1}, {-2, 1}, {-2, -1}, {1, 2}, {1, -2}, {-1, 2}, {-1, -2}}, legalMoves);
+            case "Rook" -> addLineMoves(spot, new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}}, legalMoves);
+            case "Knight" -> addSingleMoves(spot, new int[][]{{2, 1}, {2, -1}, {-2, 1}, {-2, -1}, {1, 2}, {-1, 2}, {1, -2}, {-1, -2}}, legalMoves);
             case "Bishop" -> addLineMoves(spot, new int[][]{{1, 1}, {-1, -1}, {1, -1}, {-1, 1}}, legalMoves);
             case "Queen" -> addLineMoves(spot, new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {-1, -1}, {1, -1}, {-1, 1}}, legalMoves);
             case "King" -> addSingleMoves(spot, new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {-1, -1}, {1, -1}, {-1, 1}}, legalMoves);
@@ -238,7 +248,7 @@ public class ChessGame {
      * @param legalMoves
      * @throws Exception
      */
-    private void addPawnMoves(Spot spot, PieceColor color, List<Spot> legalMoves) throws Exception {
+    private void addPawnMoves(Spot spot, PieceColor color, List<Spot> legalMoves) {
         int direction = color == PieceColor.WHITE ? -1 : 1;
         // Standard single move
         Spot newSpot = new Spot(spot.getX() + direction, spot.getY(), null);
@@ -271,12 +281,12 @@ public class ChessGame {
      * @param legalMoves
      * @throws Exception
      */
-    private void addSingleMoves(Spot spot, int[][] moves, List<Spot> legalMoves) throws Exception {
+    private void addSingleMoves(Spot spot, int[][] moves, List<Spot> legalMoves) {
         for (int[] move : moves) {
-            Spot newPos = new Spot(spot.getX() + move[0], spot.getY() + move[1], null);
-            if (isPositionOnBoard(newPos) && (board.getSpot(newPos.getX(), newPos.getY()).getPiece() == null ||
-                board.getSpot(newPos.getX(), newPos.getY()).getPiece().getColor() != board.getSpot(spot.getX(), spot.getY()).getPiece().getColor())) {
-                legalMoves.add(newPos);
+            Spot newSpot = new Spot(spot.getX() + move[0], spot.getY() + move[1], null);
+            if (isPositionOnBoard(newSpot) && (board.getSpot(newSpot.getX(), newSpot.getY()).getPiece() == null ||
+                board.getSpot(newSpot.getX(), newSpot.getY()).getPiece().getColor() != board.getSpot(spot.getX(), spot.getY()).getPiece().getColor())) {
+                legalMoves.add(newSpot);
             }
         }
     }
@@ -288,12 +298,12 @@ public class ChessGame {
      * @param legalMoves
      * @throws Exception
      */
-    private void addLineMoves(Spot spot, int[][] directions, List<Spot> legalMoves) throws Exception {
+    private void addLineMoves(Spot spot, int[][] directions, List<Spot> legalMoves) {
         for (int[] d : directions) {
             Spot newSpot = new Spot(spot.getX() + d[0], spot.getY() + d[1], null);
             while (isPositionOnBoard(newSpot)) {
-                if (board.getSpot(newSpot.getX(), newSpot.getY()) == null) {
-                    legalMoves.add(new Spot(newSpot.getX(), newSpot.getY(), null));
+                if (board.getSpot(newSpot.getX(), newSpot.getY()).getPiece() == null) {
+                    legalMoves.add(newSpot);
                     newSpot = new Spot(newSpot.getX() + d[0], newSpot.getY() + d[1], null);
                 } else {
                     if (board.getSpot(newSpot.getX(), newSpot.getY()).getPiece().getColor() != board.getSpot(spot.getX(), spot.getY()).getPiece().getColor()) {
