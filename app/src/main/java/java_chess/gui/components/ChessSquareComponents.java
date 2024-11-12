@@ -50,7 +50,8 @@ public class ChessSquareComponents extends JButton{
      * @param color
      */
     public void setPieceSymbols(Image img, Color color) {
-        this.setIcon(new ImageIcon(img));
+        Image processImage = img.getScaledInstance(100, 100, java.awt.Image.SCALE_DEFAULT);
+        this.setIcon(new ImageIcon(processImage));
         this.setForeground(color);
     }
 
