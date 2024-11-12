@@ -19,6 +19,11 @@ public class Rook extends Piece {
      */
     public Rook(PieceColor color) {
         super(color);
+        if (color == PieceColor.WHITE) {
+            image = getImage("/assets/wr");
+        } else {
+            image = getImage("/assets/br");
+        }
     }
 
     // Getters

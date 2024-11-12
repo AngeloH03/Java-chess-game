@@ -49,11 +49,11 @@ public class Board {
         /* for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
                 if (row == 6 && col == 4) {
-                    boxes[row][col] = new Spot(row, col, new Knight(PieceColor.WHITE));
+                    boxes[row][col] = new Spot(row, col, new Rook(PieceColor.WHITE));
                 } else if (row == 2 && col == 5) {
-                    boxes[row][col] = new Spot(row, col, new Pawn(PieceColor.BLACK));
+                    boxes[row][col] = new Spot(row, col, new Queen(PieceColor.BLACK));
                 } else if (row == 2 && col == 4) {
-                    boxes[row][col] = new Spot(row, col, new Pawn(PieceColor.BLACK));
+                    boxes[row][col] = new Spot(row, col, new Rook(PieceColor.BLACK));
                 } else if (row == 2 && col == 3) {
                     boxes[row][col] = new Spot(row, col, new Pawn(PieceColor.BLACK));
                 } else {

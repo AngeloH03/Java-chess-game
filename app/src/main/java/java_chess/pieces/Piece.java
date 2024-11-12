@@ -1,5 +1,9 @@
 package java_chess.pieces;
 
+import java.awt.image.BufferedImage;
+
+import javax.imageio.ImageIO;
+
 import java_chess.board.Board;
 import java_chess.board.Spot;
 
@@ -9,7 +13,8 @@ import java_chess.board.Spot;
  */
 public abstract class Piece {
     // Attributes
-    private PieceColor color;
+    public BufferedImage image;
+    protected PieceColor color;
     private boolean killed = false;
 
     // Constructor(s)
@@ -28,6 +33,21 @@ public abstract class Piece {
      */
     public PieceColor getColor() {
         return color;
+    }
+
+    /**
+     * Returns an image of which path is passed as an argument.
+     * @param path
+     * @return
+     */
+    public BufferedImage getImage(String path) {
+        BufferedImage image = null;
+        try {
+            image = ImageIO.read(getClass().getResourceAsStream(path + ".png"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return image;
     }
 
     /**

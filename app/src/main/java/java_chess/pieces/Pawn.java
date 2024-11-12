@@ -11,7 +11,6 @@ import java_chess.board.Spot;
  */
 public class Pawn extends Piece {
     // Attributes
-    boolean firstMove = true;
     boolean enPassant = false;
 
     // Constructor(s)
@@ -21,6 +20,11 @@ public class Pawn extends Piece {
      */
     public Pawn(PieceColor color) {
         super(color);
+        if (color == PieceColor.WHITE) {
+            image = getImage("/assets/wp");
+        } else {
+            image = getImage("/assets/bp");
+        }
     }
 
     @Override
@@ -49,7 +53,7 @@ public class Pawn extends Piece {
         if (end.getPiece() == null && endX == startX + direction && y == 0) {
             return true; // Move forward
         }
-        if (isAtStartSpot && endX == startX + (2*direction) && y == 0) return true; // First move
+        if (isAtStartSpot && board.getSpot(startX + direction, startY).getPiece() == null && endX == startX + (2*direction) && y == 0) return true; // First move
 
         // Diagonal capture
         if (end.getPiece() != null && end.getPiece().getColor() != this.getColor() && endX == startX + direction && y == 1) {

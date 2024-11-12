@@ -3,6 +3,7 @@ package java_chess.gui;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
@@ -101,10 +102,9 @@ public class ChessGameGUI extends JFrame {
             for (int col = 0; col < 8; col++) {
                 Piece piece = board.getSpot(row, col).getPiece();
                 if (piece != null) {
-                    // If using unicode symbols
-                    String symbol = pieceUnicodeMap.get(piece.getClass());
+                    Image img = piece.image;
                     Color color = (piece.getColor() == PieceColor.WHITE) ? Color.WHITE : Color.BLACK;
-                    squares[row][col].setPieceSymbols(symbol, color);
+                    squares[row][col].setPieceSymbols(img, color);
                 } else squares[row][col].clearPieceSymbols();
             }
         }
