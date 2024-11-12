@@ -22,9 +22,9 @@ public class King extends Piece {
     public King(PieceColor color) { 
         super(color);
         if (color == PieceColor.WHITE) {
-            image = getImage("/assets/wk");
+            image = setImage("/assets/wk");
         } else {
-            image = getImage("/assets/bk");
+            image = setImage("/assets/bk");
         }
     }
   

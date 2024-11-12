@@ -18,9 +18,9 @@ public class Bishop extends Piece {
     public Bishop(PieceColor color) {
         super(color);
         if (color == PieceColor.WHITE) {
-            image = getImage("/assets/wb");
+            image = setImage("/assets/wb");
         } else {
-            image = getImage("/assets/bb");
+            image = setImage("/assets/bb");
         }
     }
 

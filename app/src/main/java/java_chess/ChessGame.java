@@ -256,7 +256,7 @@ public class ChessGame {
         // Double move from starting position
         if (color == PieceColor.WHITE && spot.getX() == 6 || color == PieceColor.BLACK && spot.getX() == 1) {
             newSpot = new Spot(spot.getX() + (2*direction), spot.getY(), null);
-            Spot intermidiateSpot = new Spot(newSpot.getX() + direction, newSpot.getY(), null);
+            Spot intermidiateSpot = board.getSpot(spot.getX() + direction, spot.getY());
             if (isPositionOnBoard(newSpot) && board.getSpot(newSpot.getX(), newSpot.getY()).getPiece() == null && 
             board.getSpot(intermidiateSpot.getX(), intermidiateSpot.getY()).getPiece() == null) {
                 legalMoves.add(newSpot);

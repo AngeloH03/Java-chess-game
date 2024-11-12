@@ -18,9 +18,9 @@ public class Knight extends Piece {
     public Knight(PieceColor color) {
         super(color);
         if (color == PieceColor.WHITE) {
-            image = getImage("/assets/wn");
+            image = setImage("/assets/wn");
         } else {
-            image = getImage("/assets/bn");
+            image = setImage("/assets/bn");
         }
     }
 

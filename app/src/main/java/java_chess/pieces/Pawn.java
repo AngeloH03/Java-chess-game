@@ -21,9 +21,9 @@ public class Pawn extends Piece {
     public Pawn(PieceColor color) {
         super(color);
         if (color == PieceColor.WHITE) {
-            image = getImage("/assets/wp");
+            image = setImage("/assets/wp");
         } else {
-            image = getImage("/assets/bp");
+            image = setImage("/assets/bp");
         }
     }
 

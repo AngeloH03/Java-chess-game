@@ -40,15 +40,6 @@ public abstract class Piece {
      * @param path
      * @return
      */
-    public BufferedImage getImage(String path) {
-        BufferedImage image = null;
-        try {
-            image = ImageIO.read(getClass().getResourceAsStream(path + ".png"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return image;
-    }
 
     /**
      * Checks wether the {@code Piece} is killed or not.
@@ -73,6 +64,21 @@ public abstract class Piece {
      */
     public void setIsKilled(boolean killed) {
         this.killed = killed;
+    }
+
+    /**
+     * Sets a {@code Piece}'s image.
+     * @param path
+     * @return
+     */
+    public BufferedImage setImage(String path) {
+        BufferedImage image = null;
+        try {
+            image = ImageIO.read(getClass().getResourceAsStream(path + ".png"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return image;
     }
 
     /**

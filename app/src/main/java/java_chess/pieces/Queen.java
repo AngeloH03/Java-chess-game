@@ -18,9 +18,9 @@ public class Queen extends Piece {
     public Queen(PieceColor color) {
         super(color);
         if (color == PieceColor.WHITE) {
-            image = getImage("/assets/wq");
+            image = setImage("/assets/wq");
         } else {
-            image = getImage("/assets/bq");
+            image = setImage("/assets/bq");
         }
     }
 

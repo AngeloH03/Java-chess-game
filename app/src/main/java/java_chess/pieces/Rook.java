@@ -20,9 +20,9 @@ public class Rook extends Piece {
     public Rook(PieceColor color) {
         super(color);
         if (color == PieceColor.WHITE) {
-            image = getImage("/assets/wr");
+            image = setImage("/assets/wr");
         } else {
-            image = getImage("/assets/br");
+            image = setImage("/assets/br");
         }
     }
 
