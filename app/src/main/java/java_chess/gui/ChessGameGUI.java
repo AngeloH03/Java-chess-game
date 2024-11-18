@@ -37,17 +37,6 @@ public class ChessGameGUI extends JFrame {
     // Attributes
     private final ChessSquareComponents[][] squares = new ChessSquareComponents[8][8];
     private final ChessGame game = new ChessGame();
-    private final Map<Class<? extends Piece>, String> pieceUnicodeMap = new HashMap<>()
-    {
-        {
-            put(Pawn.class, "\u265F");
-            put(Rook.class, "\u265C");
-            put(Knight.class, "\u265E");
-            put(Bishop.class, "\u265D");
-            put(Queen.class, "\u265B");
-            put(King.class, "\u265A");
-        }
-    };
 
     // Constructor(s)
     /**
@@ -137,7 +126,7 @@ public class ChessGameGUI extends JFrame {
         PieceColor currentPlayer = game.getCurrentPlayerColor(); // Current player color
         boolean inCheck = game.isInCheck(currentPlayer);
 
-        if (inCheck) JOptionPane.showMessageDialog(this, currentPlayer + " is in check!");
+        if (inCheck) JOptionPane.showMessageDialog(this, currentPlayer + " est en échec");
     }
 
     /**

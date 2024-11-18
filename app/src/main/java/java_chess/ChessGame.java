@@ -128,7 +128,9 @@ public class ChessGame {
             for (int col = 0; col < 8; col++) {
                 Piece piece = board.getSpot(row, col).getPiece();
                 if (piece != null && piece.getColor() != kingColor) {
-                    if (piece.canMove(board, new Spot(row, col, piece), kingSpot)) return true; // An opponent piece can capture the king.
+                    if (piece.canMove(board, new Spot(row, col, piece), kingSpot)) {
+                        return true; // An opponent piece can capture the king.
+                    }
                 }
             }
         }
@@ -142,27 +144,31 @@ public class ChessGame {
      * @throws Exception
      */
     public boolean isCheckMate(PieceColor kingColor) throws Exception {
+        System.out.println("Entrée isCheckMate");
         // If king is not in check then it cannot be chackmate
         if (!isInCheck(kingColor)) return false;
 
         Spot kingSpot = findKingSpot(kingColor);
-        King king = (King) board.getSpot(kingSpot.getX(), kingSpot.getY()).getPiece();
+        King king = (King) kingSpot.getPiece();
 
         // Find a move that gets the king out of check
         for (int rowOffset = -1; rowOffset <= 1; rowOffset++) {
             for (int colOffset = -1; colOffset <= 1; colOffset++) {
+                System.out.println("At : " + rowOffset + colOffset);
                 if (rowOffset == 0 && colOffset == 0) {
                     continue; // Skip the current position of the king
                 }
-                Spot newSpot = new Spot(kingSpot.getX() + rowOffset, kingSpot.getY() + colOffset, null);
+                Spot newSpot = board.getSpot(kingSpot.getX() + rowOffset, kingSpot.getY() + colOffset);
                 // Check if moving the king to a new position is a legal move and will not result in a check
                 if (isPositionOnBoard(newSpot) && 
                 king.canMove(board, kingSpot, newSpot) &&
                 !wouldBeInCheckAfterMove(kingColor, kingSpot, newSpot)) {
+                    System.out.println("Nope found a way out ! at : " + newSpot.getX() + " , " + newSpot.getY());
                     return false; // Found a move that gets the king out of check so it's not checkmate
                 }
             }
         }
+        System.out.println("Ah bah là frr c'est perdu heiiin gg !");
         return true; // Checkmate
     }
 
@@ -214,6 +220,7 @@ public class ChessGame {
         board.getSpot(start.getX(), start.getY()).setPiece(board.getSpot(end.getX(), end.getY()).getPiece());
         board.getSpot(end.getX(), end.getY()).setPiece(temp);
 
+        System.out.println("inCheck : " + inCheck);
         return inCheck;
     }
 
