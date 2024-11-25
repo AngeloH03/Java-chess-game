@@ -17,6 +17,11 @@ public class Queen extends Piece {
      */
     public Queen(PieceColor color) {
         super(color);
+        if (color == PieceColor.WHITE) {
+            image = setImage("/assets/wq");
+        } else {
+            image = setImage("/assets/bq");
+        }
     }
 
     @Override

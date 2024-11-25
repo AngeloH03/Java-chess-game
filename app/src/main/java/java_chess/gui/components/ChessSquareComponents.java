@@ -3,7 +3,9 @@ package java_chess.gui.components;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 /**
@@ -28,7 +30,7 @@ public class ChessSquareComponents extends JButton{
      */
     private void initButton() {
         // Set fixed size for uniformity
-        setPreferredSize(new Dimension(64, 64));
+        setPreferredSize(new Dimension(100, 100));
 
         // Set background color based on row and col for checkboard effects
         if ((row + col) % 2 == 0) setBackground(new Color(235, 236, 208));
@@ -47,8 +49,9 @@ public class ChessSquareComponents extends JButton{
      * @param symbol
      * @param color
      */
-    public void setPieceSymbols(String symbol, Color color) {
-        this.setText(symbol);
+    public void setPieceSymbols(Image img, Color color) {
+        Image processImage = img.getScaledInstance(100, 100, java.awt.Image.SCALE_DEFAULT);
+        this.setIcon(new ImageIcon(processImage));
         this.setForeground(color);
     }
 
@@ -56,6 +59,6 @@ public class ChessSquareComponents extends JButton{
      * Clear piece
      */
     public void clearPieceSymbols() {
-        this.setText("");
+        this.setIcon(null);
     }
 }

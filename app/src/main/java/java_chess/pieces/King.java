@@ -21,6 +21,11 @@ public class King extends Piece {
      */
     public King(PieceColor color) { 
         super(color);
+        if (color == PieceColor.WHITE) {
+            image = setImage("/assets/wk");
+        } else {
+            image = setImage("/assets/bk");
+        }
     }
   
     // Getters
