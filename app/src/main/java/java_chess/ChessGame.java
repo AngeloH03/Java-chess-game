@@ -95,21 +95,22 @@ public class ChessGame {
      * @param start
      * @param end
      * @return boolean
-     * @throws Exception 
+     * @throws Exception
      */
     public boolean makeMove(Spot start, Spot end) throws Exception {
         Piece currentPiece = start.getPiece();
+        PieceColor pieceColor = findKingSpot(whiteTurn ? PieceColor.WHITE : PieceColor.BLACK).getPiece().getColor();
 
         // No piece at start position or not the player's turn
         if (currentPiece == null || currentPiece.getColor() !=  (whiteTurn ? PieceColor.WHITE : PieceColor.BLACK)) return false;
 
-        System.out.println(currentPiece.getClass().getSimpleName());
+        if (wouldBeInCheckAfterMove(pieceColor, start, end)) return false;
 
         if (currentPiece.canMove(board, start, end)) {
-            System.out.println("can move");
             end.setPiece(currentPiece);
             start.setPiece(null);
             whiteTurn = !whiteTurn;
+            System.out.println("can move");
             return true;
         }
         System.out.println("can't move");
@@ -147,7 +148,7 @@ public class ChessGame {
         System.out.println("Entrée isCheckMate");
         // If king is not in check then it cannot be chackmate
         if (!isInCheck(kingColor)) return false;
-
+        
         Spot kingSpot = findKingSpot(kingColor);
         King king = (King) kingSpot.getPiece();
 
@@ -178,7 +179,7 @@ public class ChessGame {
      * @return Spot
      * @throws Exception
      */
-    private Spot findKingSpot(PieceColor color) throws Exception {
+    public Spot findKingSpot(PieceColor color) throws Exception {
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
                 Piece piece = board.getSpot(row, col).getPiece();
@@ -255,18 +256,18 @@ public class ChessGame {
      * @param legalMoves
      * @throws Exception
      */
-    private void addPawnMoves(Spot spot, PieceColor color, List<Spot> legalMoves) {
+    private void addPawnMoves(Spot spot, PieceColor color, List<Spot> legalMoves) throws Exception {
         int direction = color == PieceColor.WHITE ? -1 : 1;
         // Standard single move
         Spot newSpot = new Spot(spot.getX() + direction, spot.getY(), null);
-        if (isPositionOnBoard(newSpot) && board.getSpot(newSpot.getX(), newSpot.getY()).getPiece() == null) legalMoves.add(newSpot);
+        if (isPositionOnBoard(newSpot) && board.getSpot(newSpot.getX(), newSpot.getY()).getPiece() == null) if (!wouldBeInCheckAfterMove(findKingSpot(whiteTurn ? PieceColor.WHITE : PieceColor.BLACK).getPiece().getColor(), spot, newSpot)) legalMoves.add(newSpot);
         // Double move from starting position
         if (color == PieceColor.WHITE && spot.getX() == 6 || color == PieceColor.BLACK && spot.getX() == 1) {
             newSpot = new Spot(spot.getX() + (2*direction), spot.getY(), null);
             Spot intermidiateSpot = board.getSpot(spot.getX() + direction, spot.getY());
             if (isPositionOnBoard(newSpot) && board.getSpot(newSpot.getX(), newSpot.getY()).getPiece() == null && 
             board.getSpot(intermidiateSpot.getX(), intermidiateSpot.getY()).getPiece() == null) {
-                legalMoves.add(newSpot);
+                if (!wouldBeInCheckAfterMove(findKingSpot(whiteTurn ? PieceColor.WHITE : PieceColor.BLACK).getPiece().getColor(), spot, newSpot)) legalMoves.add(newSpot);
             }
         }
 
@@ -276,7 +277,7 @@ public class ChessGame {
             newSpot = new Spot(spot.getX() + direction, col, null);
             if (isPositionOnBoard(newSpot) && board.getSpot(newSpot.getX(), newSpot.getY()).getPiece() != null && 
             board.getSpot(newSpot.getX(), newSpot.getY()).getPiece().getColor() != color) {
-                legalMoves.add(newSpot);
+                if (!wouldBeInCheckAfterMove(findKingSpot(whiteTurn ? PieceColor.WHITE : PieceColor.BLACK).getPiece().getColor(), spot, newSpot)) legalMoves.add(newSpot);
             }
         }
     }
@@ -288,12 +289,12 @@ public class ChessGame {
      * @param legalMoves
      * @throws Exception
      */
-    private void addSingleMoves(Spot spot, int[][] moves, List<Spot> legalMoves) {
+    private void addSingleMoves(Spot spot, int[][] moves, List<Spot> legalMoves) throws Exception {
         for (int[] move : moves) {
             Spot newSpot = new Spot(spot.getX() + move[0], spot.getY() + move[1], null);
             if (isPositionOnBoard(newSpot) && (board.getSpot(newSpot.getX(), newSpot.getY()).getPiece() == null ||
                 board.getSpot(newSpot.getX(), newSpot.getY()).getPiece().getColor() != board.getSpot(spot.getX(), spot.getY()).getPiece().getColor())) {
-                legalMoves.add(newSpot);
+                if (!wouldBeInCheckAfterMove(findKingSpot(whiteTurn ? PieceColor.WHITE : PieceColor.BLACK).getPiece().getColor(), spot, newSpot)) legalMoves.add(newSpot);
             }
         }
     }
@@ -305,16 +306,16 @@ public class ChessGame {
      * @param legalMoves
      * @throws Exception
      */
-    private void addLineMoves(Spot spot, int[][] directions, List<Spot> legalMoves) {
+    private void addLineMoves(Spot spot, int[][] directions, List<Spot> legalMoves) throws Exception {
         for (int[] d : directions) {
             Spot newSpot = new Spot(spot.getX() + d[0], spot.getY() + d[1], null);
             while (isPositionOnBoard(newSpot)) {
                 if (board.getSpot(newSpot.getX(), newSpot.getY()).getPiece() == null) {
-                    legalMoves.add(newSpot);
+                    if (!wouldBeInCheckAfterMove(findKingSpot(whiteTurn ? PieceColor.WHITE : PieceColor.BLACK).getPiece().getColor(), spot, newSpot)) legalMoves.add(newSpot);
                     newSpot = new Spot(newSpot.getX() + d[0], newSpot.getY() + d[1], null);
                 } else {
                     if (board.getSpot(newSpot.getX(), newSpot.getY()).getPiece().getColor() != board.getSpot(spot.getX(), spot.getY()).getPiece().getColor()) {
-                        legalMoves.add(newSpot);
+                        if (!wouldBeInCheckAfterMove(findKingSpot(whiteTurn ? PieceColor.WHITE : PieceColor.BLACK).getPiece().getColor(), spot, newSpot)) legalMoves.add(newSpot);
                     }
                     break;
                 }
