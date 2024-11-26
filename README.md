@@ -11,4 +11,4 @@ this is a personnal project made for fun but it might come in handy on a boring 
 
 Aah sh*t I suck at this game...
 
-(French language only)
+(French language only et ouais jsp pk j'écris en anglais)
