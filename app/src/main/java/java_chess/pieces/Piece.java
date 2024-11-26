@@ -15,7 +15,6 @@ public abstract class Piece {
     // Attributes
     public BufferedImage image;
     protected PieceColor color;
-    private boolean killed = false;
 
     // Constructor(s)
     /**
@@ -41,14 +40,6 @@ public abstract class Piece {
      * @return
      */
 
-    /**
-     * Checks wether the {@code Piece} is killed or not.
-     * @return boolean
-     */
-    public boolean isKilled() {
-        return killed;
-    }
-
     // Setters
     /**
      * Sets the {@code color} attribute of a {@code Piece}.
@@ -56,14 +47,6 @@ public abstract class Piece {
      */
     public void setColor(PieceColor color) {
         this.color = color;
-    }
-
-    /**
-     * Sets the {@code killed} attribute of a {@code Piece}.
-     * @param killed
-     */
-    public void setIsKilled(boolean killed) {
-        this.killed = killed;
     }
 
     /**
@@ -88,5 +71,5 @@ public abstract class Piece {
      * @param end
      * @return boolean
      */
-    public abstract boolean canMove(Board board, Spot start, Spot end) throws Exception;
+    public abstract boolean canMove(Board board, Spot start, Spot end);
 }

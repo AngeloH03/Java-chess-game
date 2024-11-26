@@ -148,7 +148,7 @@ public class ChessGameGUI extends JFrame {
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
                 if (row == kinSpot.getX() && col == kinSpot.getY()) continue;
-                squares[row][col].setBackground((row + col) % 2 == 0 ? new Color(235, 236, 208) : new Color(115, 149, 82));
+                squares[row][col].setBackground((row + col) % 2 == 0 ? new Color(240, 217, 181) : new Color(181, 136, 99));
             }
         }
     }

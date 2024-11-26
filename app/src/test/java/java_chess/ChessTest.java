@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import java_chess.board.Board;
 import java_chess.board.Spot;
-import java_chess.pieces.Bishop;
-import java_chess.pieces.Knight;
 import java_chess.pieces.Pawn;
 import java_chess.pieces.Piece;
 import java_chess.pieces.PieceColor;
@@ -22,15 +20,6 @@ public class ChessTest {
         // Rook
         Rook rook = new Rook(PieceColor.BLACK);
         Assertions.assertEquals(PieceColor.BLACK, rook.getColor());
-
-        // Knight
-        Knight knight = new Knight(PieceColor.WHITE);
-        Assertions.assertEquals(false, knight.isKilled());
-
-        // Bishop
-        Bishop bishop = new Bishop(PieceColor.BLACK);
-        bishop.setIsKilled(true);
-        Assertions.assertEquals(true, bishop.isKilled());
     }
 
     @Test void spotTest() {
@@ -49,7 +38,7 @@ public class ChessTest {
         Spot start = new Spot(0, 0, pawn);
         Spot end = new Spot(0, -1, null);
 
-        Assertions.assertEquals(true, pawn.canMove(board, start, end));
+        Assertions.assertEquals(false, pawn.canMove(board, start, end));
     }
 
 }

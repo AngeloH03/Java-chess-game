@@ -33,8 +33,8 @@ public class ChessSquareComponents extends JButton{
         setPreferredSize(new Dimension(100, 100));
 
         // Set background color based on row and col for checkboard effects
-        if ((row + col) % 2 == 0) setBackground(new Color(235, 236, 208));
-        else setBackground(new Color(115, 149, 82));
+        if ((row + col) % 2 == 0) setBackground(new Color(240, 217, 181));
+        else setBackground(new Color(181, 136, 99));
 
         // Ensure text (Chess piece symbols) are centered
         setHorizontalAlignment(CENTER);

@@ -27,16 +27,19 @@ public class Board {
 
     // Getters
     /**
-     * Returns a specific {@code Spot} on the board
+     * Returns a specific {@code Spot} on the board.
      * @param x
      * @param y
      * @return {@code Spot}
-     * @throws Exception
      */
     public Spot getSpot(int x, int y) {
         return boxes[x][y];
     }
 
+    /**
+     * Returns the whole chess {@code Board}.
+     * @return
+     */
     public Spot[][] getBoard() {
         return this.boxes;
     }

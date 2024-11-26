@@ -25,7 +25,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean canMove(Board board, Spot start, Spot end) throws Exception {
+    public boolean canMove(Board board, Spot start, Spot end) {
         // Cannot move a Piece on a spot that has the same color as the current one
         if (end.getPiece() != null && end.getPiece().getColor() == this.getColor()) return false;
         
