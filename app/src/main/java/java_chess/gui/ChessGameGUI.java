@@ -37,7 +37,7 @@ public class ChessGameGUI extends JFrame {
      * @throws Exception
      */
     public ChessGameGUI() {
-        super("Shatter-Chess");
+        super("Chess");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout(8, 8));
         initializeBoard();
